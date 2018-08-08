@@ -84,8 +84,12 @@ class App {
       this.bus = bus
     })
 
-    const pageUp = () => state.page().pageUp(this.maxPageHeight())
-    const pageDown = () => state.page().pageDown()
+    const pageUp = () => {
+      state.currentPage().pageUp(layout.maxPageHeight())
+    }
+    const pageDown = () => {
+      state.currentPage().pageDown()
+    }
 
     input.on('ctrl-n', () => state.nextPage())
     input.on('ctrl-p', () => state.prevPage())
