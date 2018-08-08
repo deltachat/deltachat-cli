@@ -2,6 +2,26 @@ const chalk = require('chalk')
 const util = require('./util')
 const events = require('deltachat-node/events')
 
+class ChatMessage {
+  constructor (msgId, dc) {
+    this._msgId = msgId
+    this._dc = dc
+  }
+
+  toString () {
+    const msg = this._dc.getMessage(this._msgId)
+    if (msg !== null) {
+      // TODO now since we are completely dynamic when rendering messages
+      // we can put all sorts of state here to show that a message was
+      // delivered etc
+      const fromId = msg.getFromId()
+      const text = msg.getText().replace(/\n/gi, '')
+      const timestamp = msg.getTimestamp()
+      return `${chalk.yellow(timestamp)}:[${fromId}] > ${text}`
+    }
+  }
+}
+
 class AbstractPage {
   constructor (name) {
     // TODO this.name should be internal and we should have a method
@@ -19,6 +39,9 @@ class AbstractPage {
       // a message object (with a msgId etc, which we could use to
       // update status with and in _this_ method we convert it to
       // a string)
+      if (typeof line !== 'string') {
+        line = line.toString()
+      }
       accum.push.apply(accum, util.wrapAnsi(line, width))
       return accum
     }, [])
@@ -75,16 +98,14 @@ class StatusPage extends AbstractPage {
 }
 
 class ChatPage extends AbstractPage {
-  constructor (name, chatId) {
+  constructor (name, chatId, dc) {
     super(name)
     this.chatId = chatId
+    this._dc = dc
   }
 
-  appendMessage (msg) {
-    const fromId = msg.getFromId()
-    const text = msg.getText().replace(/\n/gi, '')
-    const timestamp = msg.getTimestamp()
-    this.append(`${timestamp}:[${fromId}] > ${text}`)
+  appendMessage (msgId) {
+    this.append(new ChatMessage(msgId, this._dc))
   }
 }
 
@@ -112,10 +133,7 @@ class State {
   }
 
   appendToChat (chatId, msgId) {
-    const msg = this._dc.getMessage(msgId)
-    if (msg) {
-      this._getChatPage(chatId).appendMessage(msg)
-    }
+    this._getChatPage(chatId).appendMessage(msgId)
   }
 
   onEnter (line) {
@@ -159,7 +177,7 @@ class State {
       // TODO this means we can't change chat name dynamically
       // it's probably better if we just store chatId and then
       // get the chat object to get the name
-      page = new ChatPage(name, chatId)
+      page = new ChatPage(name, chatId, this._dc)
       this._pages.push(page)
     }
     return page
