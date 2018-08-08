@@ -24,10 +24,7 @@ class ChatMessage {
 
 class AbstractPage {
   constructor (name) {
-    // TODO this.name should be internal and we should have a method
-    // for accessing the name so e.g. ChatPage can be dynamic, since
-    // the name of a chat can change
-    this.name = name
+    this._name = name
     this._lines = []
     this._allLines = []
     this._scrollback = 0
@@ -35,13 +32,7 @@ class AbstractPage {
 
   render (state, width, height) {
     const all = this._allLines = this._lines.reduce((accum, line) => {
-      // TODO 'line' here could actually be an object as well, e.g.
-      // a message object (with a msgId etc, which we could use to
-      // update status with and in _this_ method we convert it to
-      // a string)
-      if (typeof line !== 'string') {
-        line = line.toString()
-      }
+      if (typeof line !== 'string') line = line.toString()
       accum.push.apply(accum, util.wrapAnsi(line, width))
       return accum
     }, [])
@@ -56,6 +47,10 @@ class AbstractPage {
       all.length - height - scrollback,
       all.length - scrollback
     )
+  }
+
+  name () {
+    return this._name
   }
 
   pageUp (height) {
@@ -98,10 +93,14 @@ class StatusPage extends AbstractPage {
 }
 
 class ChatPage extends AbstractPage {
-  constructor (name, chatId, dc) {
-    super(name)
+  constructor (chatId, dc) {
+    super('')
     this.chatId = chatId
     this._dc = dc
+  }
+
+  name () {
+    return `#${this._dc.getChat(this.chatId).getName()}`
   }
 
   appendMessage (msgId) {
@@ -169,15 +168,9 @@ class State {
   }
 
   _getChatPage (chatId) {
-    const chat = this._dc.getChat(chatId)
-    const name = `#${chat.getName()}`
-    // TODO we should also use chatId to find the chat and not name
-    let page = this._pages.find(p => p.name === name)
+    let page = this._pages.find(p => p.chatId === chatId)
     if (!page) {
-      // TODO this means we can't change chat name dynamically
-      // it's probably better if we just store chatId and then
-      // get the chat object to get the name
-      page = new ChatPage(name, chatId, this._dc)
+      page = new ChatPage(chatId, this._dc)
       this._pages.push(page)
     }
     return page

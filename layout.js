@@ -63,7 +63,7 @@ class Layout {
 
   prompt (state) {
     return [
-      `[${state.currentPage().name}] ${state.input.line()}`
+      `[${state.currentPage().name()}] ${state.input.line()}`
     ]
   }
 
