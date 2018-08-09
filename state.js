@@ -4,12 +4,14 @@ const chalk = require('chalk')
 const util = require('./util')
 
 class ChatMessage {
-  constructor (msgId, dc) {
+  constructor (msgId, rc, dc) {
     this._msgId = msgId
+    this._rc = rc
     this._dc = dc
   }
 
   toString () {
+    const config = this._rc.layout.message
     const msg = this._dc.getMessage(this._msgId)
     if (msg === null) return ''
 
@@ -25,20 +27,24 @@ class ChatMessage {
       `state:${msg.getState()._state}`
     ].join('')
 
+    const nickColor = isMe() ? config.me.nick : config.other.nick
+
     const body = [
-      `${chalk.red.bold(contact.getName())} > `,
+      `${chalk[nickColor].bold(contact.getName())} > `,
       `${msg.getText().replace(/\n/gi, '')}`
     ].join('')
 
     const wrappedBody = util.wrapAnsi(body, 2 * process.stdout.columns / 3).join('\n')
     const complete = header + '\n\n' + wrappedBody
+    const bgColor = isMe() ? config.me.bgColor : config.other.bgColor
+    const float = isMe() ? config.me.float : config.other.float
 
     return boxen(complete, {
-      margin: 3,
-      padding: 1,
-      float: isMe() ? 'right' : 'left',
-      backgroundColor: 'black',
-      borderStyle: 'classic'
+      margin: config.margin,
+      padding: config.padding,
+      float: float,
+      backgroundColor: bgColor,
+      borderStyle: config.borderStyle
     })
   }
 }
@@ -121,9 +127,10 @@ class StatusPage extends AbstractPage {
 }
 
 class ChatPage extends AbstractPage {
-  constructor (chatId, dc) {
+  constructor (chatId, rc, dc) {
     super('')
     this.chatId = chatId
+    this._rc = rc
     this._dc = dc
   }
 
@@ -132,7 +139,7 @@ class ChatPage extends AbstractPage {
   }
 
   appendMessage (msgId) {
-    this.append(new ChatMessage(msgId, this._dc))
+    this.append(new ChatMessage(msgId, this._rc, this._dc))
   }
 }
 
@@ -200,7 +207,7 @@ class State {
   _getChatPage (chatId) {
     let page = this._pages.find(p => p.chatId === chatId)
     if (!page) {
-      page = new ChatPage(chatId, this._dc)
+      page = new ChatPage(chatId, this._rc, this._dc)
       this._pages.push(page)
     }
     return page
