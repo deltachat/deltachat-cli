@@ -1,6 +1,7 @@
+const events = require('deltachat-node/events')
+const boxen = require('boxen')
 const chalk = require('chalk')
 const util = require('./util')
-const events = require('deltachat-node/events')
 
 class ChatMessage {
   constructor (msgId, dc) {
@@ -11,16 +12,38 @@ class ChatMessage {
   toString () {
     const msg = this._dc.getMessage(this._msgId)
     if (msg === null) return ''
-    const contact = this._dc.getContact(msg.getFromId())
-    return [
-      `ts:${chalk.yellow(msg.getTimestamp())}`,
-      `id:${msg.getId()}`,
-      `lock:${msg.getShowpadlock() ? 1 : 0}`,
-      `star:${msg.isStarred() ? 1 : 0}`,
-      `from:${contact.getName()}`,
-      `state:${msg.getState()._state}`
-    ].join(' ') + `\n > ${msg.getText().replace(/\n/gi, '')}`
+
+    const fromId = msg.getFromId()
+    const contact = this._dc.getContact(fromId)
+
+    const message = [
+      `#${msg.getId()} `,
+      `${toDate(msg.getTimestamp())} `,
+      `lock:${msg.getShowpadlock() ? 1 : 0} `,
+      `star:${msg.isStarred() ? 1 : 0} `,
+      `state:${msg.getState()._state}`,
+      `\n\n<${chalk.black(contact.getName())}> `,
+      `${msg.getText().replace(/\n/gi, '')}`
+    ].join('')
+
+    const wrapped = util.wrapAnsi(message, 2 * process.stdout.columns / 3)
+
+    return boxen(wrapped.join('\n'), {
+      margin: 3,
+      padding: 1,
+      float: fromId === 1 ? 'right' : 'left',
+      backgroundColor: fromId === 1 ? 'yellow' : 'red',
+      borderStyle: 'classic'
+    })
   }
+}
+
+const toDate = ts => {
+  const date = new Date(ts * 1000)
+  const hours = date.getHours()
+  const minutes = "0" + date.getMinutes()
+  const seconds = "0" + date.getSeconds()
+  return `${hours}:${minutes.substr(-2)}:${seconds.substr(-2)}`
 }
 
 class AbstractPage {
