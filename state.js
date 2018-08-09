@@ -24,7 +24,7 @@ class ChatMessage {
       `${toDate(msg.getTimestamp())} `,
       `lock:${msg.getShowpadlock() ? 1 : 0} `,
       `star:${msg.isStarred() ? 1 : 0} `,
-      `state:${msg.getState()._state}`
+      `state:${msg.getState().state}`
     ].join('')
 
     const nickColor = isMe() ? config.me.nick : config.other.nick
