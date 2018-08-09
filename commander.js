@@ -65,10 +65,12 @@ function renderHelp (help) {
 }
 
 function renderCommands (commands) {
-  const keys = Object.keys(commands).sort()
+  const syntaxes = Object.keys(commands).sort().map(key => {
+    return commands[key].help.syntax
+  })
   return [
     ` \n${chalk.bold('All commands:')}\n \n`,
-    `${keys.map(ex => '  ' + ex).join('\n')}`
+    `${syntaxes.map(s => '  ' + s).join('\n')}`
   ].join('')
 }
 
