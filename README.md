@@ -42,11 +42,11 @@ A lot of inspiration comes from [`irssi`](https://github.com/irssi/irssi) and th
 
 ## Why?
 
-> Why didn't you just write a plugin for `irssi` and be done with it?
+> Why didn't you just write a plugin for `irssi` or `weechat` and be done with it?
 
 That's a great question. You should write one yourself!
 
-My main goal was to implement _something_ using `deltachat-node` to exercise the api, find stuff that doesn't work so well and make way for a coming desktop application. Also, I wanted to explore how to write command line gui applications in node based on the following modules:
+Main goal is to implement _something_ using `deltachat-node` to exercise the api, find stuff that doesn't work so well and make way for a coming desktop application. Also, I wanted to explore how to write command line gui applications in node based on the following modules:
 
 * [`neat-log`](https://github.com/neat-log/neat-log)
 * [`neat-input`](https://github.com/mafintosh/neat-input)
