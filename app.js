@@ -109,28 +109,20 @@ class App {
       this.render()
     })
 
-    if (rc.debug) {
-      dc.on('ALL', (event, data1, data2) => {
-        state.logEvent(event, data1, data2)
-        this.render()
-      })
-    }
+    dc.on('ALL', (event, data1, data2) => {
+      state.logEvent(event, data1, data2)
+      this.render()
+    })
 
     dc.on('DC_EVENT_MSGS_CHANGED', (chatId, msgId) => {
       const msg = dc.getMessage(msgId)
       if (msg && msg.getState().isPending()) {
         state.appendToChat(chatId, msgId)
       }
-      this.render()
-    })
-
-    dc.on('DC_EVENT_MSG_DELIVERED', (chatId, msgId) => {
-      this.render()
     })
 
     dc.on('DC_EVENT_INCOMING_MSG', (chatId, msgId) => {
       state.appendToChat(chatId, msgId)
-      this.render()
     })
 
     this.render()
