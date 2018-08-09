@@ -26,7 +26,7 @@ class ChatMessage {
     ].join('')
 
     const body = [
-      `<${chalk.black(contact.getName())}> `,
+      `${chalk.red.bold(contact.getName())} > `,
       `${msg.getText().replace(/\n/gi, '')}`
     ].join('')
 
@@ -37,7 +37,7 @@ class ChatMessage {
       margin: 3,
       padding: 1,
       float: isMe() ? 'right' : 'left',
-      backgroundColor: isMe() ? 'yellow' : 'red',
+      backgroundColor: 'black',
       borderStyle: 'classic'
     })
   }
