@@ -14,6 +14,7 @@ class ChatMessage {
     if (msg === null) return ''
 
     const fromId = msg.getFromId()
+    const isMe = () => fromId === 1
     const contact = this._dc.getContact(fromId)
 
     const header = [
@@ -35,8 +36,8 @@ class ChatMessage {
     return boxen(complete, {
       margin: 3,
       padding: 1,
-      float: fromId === 1 ? 'right' : 'left',
-      backgroundColor: fromId === 1 ? 'yellow' : 'red',
+      float: isMe() ? 'right' : 'left',
+      backgroundColor: isMe() ? 'yellow' : 'red',
       borderStyle: 'classic'
     })
   }
@@ -193,6 +194,8 @@ class State {
     this._page = newPage < 0 ? this._pages.length - 1 : newPage
   }
 
+  // TODO pages are not sorted correctly, should be sorted on
+  // chat name
   _getChatPage (chatId) {
     let page = this._pages.find(p => p.chatId === chatId)
     if (!page) {
