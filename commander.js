@@ -42,6 +42,39 @@ class Commander {
             `${contacts.map(c => '  ' + c).join('\n')}`
           ].join(''))
         }
+      },
+      'create-contact': {
+        help: {
+          syntax: 'create-contact <name> <address>',
+          description: 'Create a contact.',
+          examples: [ '/create-contact Alice alice@site.org' ]
+        },
+        run: (name, address) => {
+          if (typeof name === 'string' && typeof address === 'string') {
+            const id = this._dc.createContact(name, address)
+            this.success(`Contact ${id} created or updated!`)
+          } else {
+            this.error('Invalid parameters!')
+          }
+        }
+      },
+      'delete-contact': {
+        help: {
+          syntax: 'delete-contact <id>',
+          description: 'Delete a contact.',
+          examples: [ '/delete-contact 22' ]
+        },
+        run: id => {
+          const contact = this._dc.getContact(id)
+          if (contact === null) {
+            return this.error(`Invalid contact id ${id}`)
+          }
+          if (this._dc.deleteContact(id)) {
+            this.success('Contact deleted successfully.')
+          } else {
+            this.error('Failed to delete contact!')
+          }
+        }
       }
     }
   }
