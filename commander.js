@@ -6,7 +6,7 @@ class Commander {
     this._dc = dc
     this._history = []
 
-    this.commands = {
+    this._commands = {
       help: {
         help: {
           syntax: 'help [<command>]',
@@ -16,14 +16,14 @@ class Commander {
         run: arg => {
           if (typeof arg === 'string') {
             // Help about a specific command
-            const cmd = this.commands[arg]
+            const cmd = this._commands[arg]
             if (cmd && cmd.help) {
               this.status(renderHelp(cmd.help))
             } else {
               this.warning(`No help for ${arg}`)
             }
           } else {
-            this.status(renderCommands(this.commands))
+            this.status(renderCommands(this._commands))
           }
         }
       },
@@ -88,7 +88,7 @@ class Commander {
     }
 
     line = line.slice(1).split(' ')
-    const cmd = this.commands[line[0]]
+    const cmd = this._commands[line[0]]
     const args = line.slice(1)
 
     if (cmd && typeof cmd.run === 'function') {
