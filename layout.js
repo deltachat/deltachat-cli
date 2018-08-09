@@ -2,6 +2,7 @@ const blit = require('txt-blit')
 const util = require('./util')
 const chalk = require('chalk')
 const gradient = require('gradient-string')
+const camelCase = require('camelcase')
 
 class Layout {
   constructor (opts) {
@@ -51,14 +52,17 @@ class Layout {
       text = chalk.bold(text)
     }
 
-    text = (chalk[opts.bgColor] || chalk.bgBlue)(text)
+    text = bgColor(opts.bgColor)(text)
 
     return [ text ]
   }
 
   statusBar (state) {
-    let bgColor = chalk[this.opts.statusbar.bgColor] || chalk.bgBlue
-    return [ bgColor(' '.repeat(process.stdout.columns)) ]
+    return [
+      bgColor(this.opts.statusbar.bgColor)(
+        ' '.repeat(process.stdout.columns)
+      )
+    ]
   }
 
   prompt (state) {
@@ -81,6 +85,11 @@ class Layout {
   statusVisible () {
     return this.opts.statusbar.show === true
   }
+}
+
+function bgColor (color) {
+  color = color || 'blue'
+  return chalk[camelCase(`bg-${color}`)]
 }
 
 module.exports = Layout

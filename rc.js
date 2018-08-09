@@ -10,14 +10,14 @@ module.exports = require('rc')('deltax', {
       textColor: 'white',
       bold: true,
       align: 'center',
-      bgColor: 'bgBlack'
+      bgColor: 'black'
     },
     page: {
-      bgColor: 'bgBlack'
+      bgColor: 'black'
     },
     statusbar: {
       show: true,
-      bgColor: 'bgBlack'
+      bgColor: 'black'
     }
   },
   logspeed: 50
