@@ -34,7 +34,7 @@ TODO
 
 ## Configuration
 
-By default `deltax` will use the `$HOME/.deltax` for storing data. This can be overriden by using the `--home` argument.
+By default `deltax` will use the `$HOME/.deltax` folder for storing data. This can be overriden by using the `--home` argument.
 
 Run `deltax` using current folder to store data:
 
