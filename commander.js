@@ -32,13 +32,13 @@ class Commander {
           description: 'Displays all contacts.',
           examples: [ '/get-contacts' ]
         },
-        run: arg => {
+        run: () => {
           const contacts = this._dc.getContacts().map(id => {
             const c = this._dc.getContact(id)
             return `${c.getNameAndAddress()} (id = ${c.getId()})`
           })
           this.status([
-            ` \n${chalk.bold('All Contacts:')}\n \n`,
+            `${chalk.bold('All Contacts:')}\n \n`,
             `${contacts.map(c => '  ' + c).join('\n')}`
           ].join(''))
         }
@@ -63,7 +63,7 @@ class Commander {
   }
 
   status (line) {
-    this._state.appendToStatusPage(line)
+    this._state.appendToStatusPage(` \n${line}`)
   }
 
   onTab () {
@@ -73,7 +73,7 @@ class Commander {
 
 function renderHelp (help) {
   return [
-    ` \n${chalk.bold('Syntax:')}\n \n`,
+    `${chalk.bold('Syntax:')}\n \n`,
     `  ${help.syntax}\n \n`,
     `${chalk.bold('Description:')}\n \n`,
     `  ${help.description}\n \n`,
@@ -87,7 +87,7 @@ function renderCommands (commands) {
     return commands[key].help.syntax
   })
   return [
-    ` \n${chalk.bold('All commands:')}\n \n`,
+    `${chalk.bold('All commands:')}\n \n`,
     `${syntaxes.map(s => '  ' + s).join('\n')}`
   ].join('')
 }
