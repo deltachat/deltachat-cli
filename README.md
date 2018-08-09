@@ -14,7 +14,7 @@ Experimental command line application built on top of the [`deltachat-node`](htt
 
 ```sh
 npm i delta-x -g
-delta-x --email user@site.org --mail_pw foo
+deltax --email user@site.org --mail_pw foo
 ```
 
 ## Screenshots
