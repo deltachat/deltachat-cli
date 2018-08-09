@@ -17,12 +17,6 @@ npm i delta-x -g
 delta-x --email user@site.org --mail_pw foo
 ```
 
-or
-
-```sh
-npx delta-x --email user@site.org --mail_pw foo
-```
-
 ## Screenshots
 
 TODO
