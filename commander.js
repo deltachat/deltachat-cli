@@ -1,8 +1,9 @@
 const chalk = require('chalk')
 
 class Commander {
-  constructor (state) {
-    this.state = state
+  constructor (state, dc) {
+    this._state = state
+    this._dc = dc
 
     this.commands = {
       help: {
@@ -24,13 +25,30 @@ class Commander {
             this.status(renderCommands(this.commands))
           }
         }
+      },
+      'get-contacts': {
+        help: {
+          syntax: 'get-contacts',
+          description: 'Displays all contacts.',
+          examples: [ '/get-contacts' ]
+        },
+        run: arg => {
+          const contacts = this._dc.getContacts().map(id => {
+            const c = this._dc.getContact(id)
+            return `${c.getNameAndAddress()} (id = ${c.getId()})`
+          })
+          this.status([
+            ` \n${chalk.bold('All Contacts:')}\n \n`,
+            `${contacts.map(c => '  ' + c).join('\n')}`
+          ].join(''))
+        }
       }
     }
   }
 
   onEnter (line) {
     if (line[0] !== '/') {
-      return this.state.onEnter(line)
+      return this._state.onEnter(line)
     }
 
     line = line.slice(1).split(' ')
@@ -45,11 +63,11 @@ class Commander {
   }
 
   status (line) {
-    this.state.appendToStatusPage(line)
+    this._state.appendToStatusPage(line)
   }
 
   onTab () {
-    // TODO handle auto complete and modify this.state.input
+    // TODO handle auto complete and modify this._state.input
   }
 }
 

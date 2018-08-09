@@ -7,7 +7,7 @@ const Layout = require('./layout')
 class App {
   constructor (rc, dc) {
     const state = new State(rc, dc)
-    const commander = new Commander(state)
+    const commander = new Commander(state, dc)
     const layout = new Layout(rc.layout)
     const render = layout.render.bind(layout)
 
