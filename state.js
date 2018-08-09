@@ -33,7 +33,9 @@ class AbstractPage {
   render (state, width, height) {
     const all = this._allLines = this._lines.reduce((accum, line) => {
       if (typeof line !== 'string') line = line.toString()
-      accum.push.apply(accum, util.wrapAnsi(line, width))
+      line.split('\n').forEach(l => {
+        accum.push.apply(accum, util.wrapAnsi(l, width))
+      })
       return accum
     }, [])
 
@@ -64,12 +66,8 @@ class AbstractPage {
     this._scrollback = Math.max(0, this._scrollback - 1)
   }
 
-  append (obj) {
-    if (typeof obj === 'string') {
-      obj.split('\n').forEach(line => this._lines.push(line))
-    } else {
-      this._lines.push(obj)
-    }
+  append (line) {
+    this._lines.push(line)
   }
 }
 
