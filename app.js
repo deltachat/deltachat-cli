@@ -40,8 +40,11 @@ class App {
     input.on('pagedown', pageDown)
     input.on('alt-p', pageUp)
     input.on('alt-n', pageDown)
+
     input.on('enter', commander.onEnter.bind(commander))
     input.on('tab', commander.onTab.bind(commander))
+    input.on('up', commander.onUp.bind(commander))
+    input.on('down', commander.onDown.bind(commander))
 
     input.on('keypress', (ch, key) => this.render())
 

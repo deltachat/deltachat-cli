@@ -4,6 +4,7 @@ class Commander {
   constructor (state, dc) {
     this._state = state
     this._dc = dc
+    this._history = []
 
     this.commands = {
       help: {
@@ -80,6 +81,8 @@ class Commander {
   }
 
   onEnter (line) {
+    this._history.push(line)
+
     if (line[0] !== '/') {
       return this._state.onEnter(line)
     }
@@ -93,6 +96,20 @@ class Commander {
     } else {
       this.error(`Unknown command: ${line[0]}`)
     }
+  }
+
+  onUp () {
+    if (!this._history.length) return
+    var command = this._history.pop()
+    this._history.unshift(command)
+    this._state.input.set(command)
+  }
+
+  onDown () {
+    if (!this._history.length) return
+    var command = this._history.shift()
+    this._history.push(command)
+    this._state.input.set(command)
   }
 
   success (line) { this.status(chalk.green(line)) }
