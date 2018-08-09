@@ -81,6 +81,7 @@ class Commander {
   }
 
   onEnter (line) {
+    line = line.trim()
     this._history.push(line)
 
     if (line[0] !== '/') {
