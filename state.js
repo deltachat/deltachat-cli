@@ -16,19 +16,23 @@ class ChatMessage {
     const fromId = msg.getFromId()
     const contact = this._dc.getContact(fromId)
 
-    const message = [
+    const header = [
       `#${msg.getId()} `,
       `${toDate(msg.getTimestamp())} `,
       `lock:${msg.getShowpadlock() ? 1 : 0} `,
       `star:${msg.isStarred() ? 1 : 0} `,
-      `state:${msg.getState()._state}`,
-      `\n\n<${chalk.black(contact.getName())}> `,
+      `state:${msg.getState()._state}`
+    ].join('')
+
+    const body = [
+      `<${chalk.black(contact.getName())}> `,
       `${msg.getText().replace(/\n/gi, '')}`
     ].join('')
 
-    const wrapped = util.wrapAnsi(message, 2 * process.stdout.columns / 3)
+    const wrappedBody = util.wrapAnsi(body, 2 * process.stdout.columns / 3).join('\n')
+    const complete = header + '\n\n' + wrappedBody
 
-    return boxen(wrapped.join('\n'), {
+    return boxen(complete, {
       margin: 3,
       padding: 1,
       float: fromId === 1 ? 'right' : 'left',
