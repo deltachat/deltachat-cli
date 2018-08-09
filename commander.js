@@ -19,7 +19,7 @@ class Commander {
             if (cmd && cmd.help) {
               this.status(renderHelp(cmd.help))
             } else {
-              this.status(`No help for ${arg}`)
+              this.warning(`No help for ${arg}`)
             }
           } else {
             this.status(renderCommands(this.commands))
@@ -58,13 +58,14 @@ class Commander {
     if (cmd && typeof cmd.run === 'function') {
       cmd.run.apply(this, args)
     } else {
-      this.status(`Unknown command: ${line[0]}`)
+      this.error(`Unknown command: ${line[0]}`)
     }
   }
 
-  status (line) {
-    this._state.appendToStatusPage(` \n${line}`)
-  }
+  success (line) { this.status(chalk.green(line)) }
+  warning (line) { this.status(chalk.yellow(line)) }
+  error (line) { this.status(chalk.red(line)) }
+  status (line) { this._state.appendToStatusPage(` \n${line}`) }
 
   onTab () {
     // TODO handle auto complete and modify this._state.input
