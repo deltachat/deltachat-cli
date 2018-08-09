@@ -26,7 +26,7 @@ TODO
 * `ctrl-n` next chat window
 * `ctrl-p` previous chat window
 * `alt-n` _or_ `pagedown` scroll down
-* `alp-p` _or_ `pageup` scroll up
+* `alt-p` _or_ `pageup` scroll up
 
 ## Commands
 
