@@ -8,7 +8,7 @@
 
 Experimental command line application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon.
 
-**WORK IN PROGRESS** Not much to see at the moment. You can send and receive messages and do simple plumbing commands.
+**WORK IN PROGRESS** Not much to see at the moment. You can send and receive messages and do simple plumbing commands. Not yet published on `npm` so you need to clone the repository and run this hardcore style.
 
 ## Install and Usage
 
