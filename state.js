@@ -10,15 +10,16 @@ class ChatMessage {
 
   toString () {
     const msg = this._dc.getMessage(this._msgId)
-    if (msg !== null) {
-      // TODO now since we are completely dynamic when rendering messages
-      // we can put all sorts of state here to show that a message was
-      // delivered etc
-      const fromId = msg.getFromId()
-      const text = msg.getText().replace(/\n/gi, '')
-      const timestamp = msg.getTimestamp()
-      return `${chalk.yellow(timestamp)}:[${fromId}] > ${text}`
-    }
+    if (msg === null) return ''
+    const contact = this._dc.getContact(msg.getFromId())
+    return [
+      `ts:${chalk.yellow(msg.getTimestamp())}`,
+      `id:${msg.getId()}`,
+      `lock:${msg.getShowpadlock() ? 1 : 0}`,
+      `star:${msg.isStarred() ? 1 : 0}`,
+      `from:${contact.getName()}`,
+      `state:${msg.getState()._state}`
+    ].join(' ') + `\n > ${msg.getText().replace(/\n/gi, '')}`
   }
 }
 
