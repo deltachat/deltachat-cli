@@ -11,19 +11,15 @@ class Commander {
       help: {
         help: {
           syntax: 'help [<command>]',
-          parameters: 'The command to display the documentation for; if no argument is given, the list of commands will be displayed.',
           description: 'Displays the documentation for the given command.',
-          examples: [ '/help', '/help help' ],
-          references: '',
-          seeAlso: ''
+          examples: [ '/help', '/help help' ]
         },
         run: arg => {
           if (typeof arg === 'string') {
             // Help about a specific command
             const cmd = this.commands[arg]
             if (cmd && cmd.help) {
-              this.status('TODO: write a method that renders cmd.help')
-              // this.status(renderHelp(cmd.help))
+              this.status(renderHelp(cmd.help))
             } else {
               this.status(`No help for ${arg}`)
             }
@@ -60,6 +56,17 @@ class Commander {
   onTab () {
     // TODO handle auto complete and modify this.state.input
   }
+}
+
+function renderHelp (help) {
+  return [
+    ` \n${chalk.bold('Syntax:')}\n \n`,
+    `  ${help.syntax}\n \n`,
+    `${chalk.bold('Description:')}\n \n`,
+    `  ${help.description}\n \n`,
+    `${chalk.bold('Examples:')}\n \n`,
+    `${help.examples.map(ex => '  ' + ex).join('\n')}`
+  ].join('')
 }
 
 class App {
