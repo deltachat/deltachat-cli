@@ -21,9 +21,7 @@ class Commander {
               this.status(`No help for ${arg}`)
             }
           } else {
-            // List all available commands
-            const keys = Object.keys(this.commands)
-            this.status('deltax commands:\n' + keys.join(' '))
+            this.status(renderCommands(this.commands))
           }
         }
       }
@@ -63,6 +61,14 @@ function renderHelp (help) {
     `  ${help.description}\n \n`,
     `${chalk.bold('Examples:')}\n \n`,
     `${help.examples.map(ex => '  ' + ex).join('\n')}`
+  ].join('')
+}
+
+function renderCommands (commands) {
+  const keys = Object.keys(commands).sort()
+  return [
+    ` \n${chalk.bold('All commands:')}\n \n`,
+    `${keys.map(ex => '  ' + ex).join('\n')}`
   ].join('')
 }
 
