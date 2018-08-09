@@ -125,12 +125,7 @@ class App {
     })
 
     dc.on('DC_EVENT_MSG_DELIVERED', (chatId, msgId) => {
-      // TODO
-      // 1. use chatId and msgId to _update_ the message state
-      // 2. OR just trigger a re-render and have the render
-      // process generate messages on the fly, using msgId's rather
-      // than pre-generated text
-      // this.render()
+      this.render()
     })
 
     dc.on('DC_EVENT_INCOMING_MSG', (chatId, msgId) => {
