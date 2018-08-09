@@ -32,9 +32,17 @@ TODO
 
 TODO
 
-## Customization
+## Configuration
 
-TODO
+By default `deltax` will use the `$HOME/.deltax` for storing data. This can be overriden by using the `--home` argument.
+
+Run `deltax` using current folder to store data:
+
+```sh
+deltax --email user@site.org --mail_pw foo --home .
+```
+
+TODO mention colors and `rc` in general.
 
 ## Kudos and Inspiration
 

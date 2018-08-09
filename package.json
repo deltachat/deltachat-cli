@@ -21,7 +21,9 @@
     "chalk": "^2.4.1",
     "deltachat-node": "0.3.0",
     "gradient-string": "^1.1.0",
+    "mkdirp": "^0.5.1",
     "neat-log": "^3.1.0",
+    "osenv": "^0.1.5",
     "rc": "^1.2.8",
     "txt-blit": "^1.0.0"
   },
