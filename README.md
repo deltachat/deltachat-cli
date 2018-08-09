@@ -62,6 +62,10 @@ Main goal is to implement _something_ using `deltachat-node` to exercise the api
 
 You should check them out. They're great!
 
+## Debug
+
+Running `deltax` with `--debug` will create a debug window where all events from `deltachat-node` can be seen.
+
 ## License
 
 Licensed under the GPLv3, see [LICENSE](./LICENSE) file for details.
