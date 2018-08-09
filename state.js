@@ -108,6 +108,7 @@ class DebugPage extends AbstractPage {
   appendMessage (event, data1, data2) {
     // TODO we might want to tweak the verbosity here since
     // there are rather many info events
+    if (event === 2091) return
     const eventStr = chalk.yellow(events[event] || '<unknown-event>')
     this.append(`${eventStr} (${chalk.green(event)}) ${data1} ${data2}`)
   }
