@@ -113,14 +113,23 @@ class Commander {
     this._state.input.set(command)
   }
 
+  onTab () {
+    const line = this._state.input.rawLine()
+    if (line.length > 1 && line[0] === '/') {
+      // command completion
+      const soFar = line.slice(1)
+      const commands = Object.keys(this._commands)
+      var matchingCommands = commands.filter(cmd => cmd.startsWith(soFar))
+      if (matchingCommands.length === 1) {
+        this._state.input.set(`/${matchingCommands[0]} `)
+      }
+    }
+  }
+
   success (line) { this.status(chalk.green(line)) }
   warning (line) { this.status(chalk.yellow(line)) }
   error (line) { this.status(chalk.red(line)) }
   status (line) { this._state.appendToStatusPage(` \n${line}`) }
-
-  onTab () {
-    // TODO handle auto complete and modify this._state.input
-  }
 }
 
 function renderHelp (help) {
