@@ -230,6 +230,7 @@ class State {
     if (!page) {
       page = new ChatPage(chatId, this._rc, this._dc)
       this._pages.push(page)
+      this._sortPages()
     }
     return page
   }
@@ -242,6 +243,17 @@ class State {
       result.push(list.getChatId(i))
     }
     return result
+  }
+
+  _sortPages () {
+    this._pages.sort((left, right) => {
+      const leftName = left.name()
+      const rightName = right.name()
+      if (leftName === 'debug' || leftName === 'status') return -1
+      if (leftName < rightName) return -1
+      if (leftName === rightName) return 0
+      return 1
+    })
   }
 }
 
