@@ -1,9 +1,9 @@
-# delta-x
+# deltachat-cli
 
 > `Delta Chat` on the command line.
 
-[![Build Status](https://travis-ci.org/ralphtheninja/delta-x.svg?branch=master)](https://travis-ci.org/ralphtheninja/delta-x)
-![Node version](https://img.shields.io/node/v/delta-x.svg)
+[![Build Status](https://travis-ci.org/ralphtheninja/deltachat-cli.svg?branch=master)](https://travis-ci.org/ralphtheninja/deltachat-cli)
+![Node version](https://img.shields.io/node/v/deltachat-cli.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Experimental command line application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon.
@@ -13,8 +13,8 @@ Experimental command line application built on top of the [`deltachat-node`](htt
 ## Install and Usage
 
 ```sh
-npm i delta-x -g
-deltax --email user@site.org --mail_pw foo
+npm i deltachat-cli -g
+deltachat --email user@site.org --mail_pw foo
 ```
 
 ## Screenshots
@@ -41,12 +41,12 @@ Commands can be executed from anywhere, but the output of all commands show up i
 
 ## Configuration
 
-By default `deltax` will use the `$HOME/.deltax` folder for storing data. This can be overriden by using the `--home` argument.
+By default `deltachat` will use the `$HOME/.deltachat_cli` folder for storing data. This can be overriden by using the `--home` argument.
 
-Run `deltax` using current folder to store data:
+Run `deltachat` using current folder to store data:
 
 ```sh
-deltax --email user@site.org --mail_pw foo --home .
+deltachat --email user@site.org --mail_pw foo --home .
 ```
 
 TODO mention colors and `rc` in general.

@@ -1,16 +1,22 @@
 {
-  "name": "delta-x",
+  "name": "deltachat-cli",
   "version": "0.0.0",
   "description": "Delta Chat on the command line",
   "main": "index.js",
   "scripts": {
     "test": "standard"
   },
+  "homepage": "https://github.com/ralphtheninja/deltachat-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ralphtheninja/deltachat-cli.git"
+  },
   "bin": {
-    "deltax": "cli.js"
+    "deltachat": "cli.js"
   },
   "keywords": [
     "deltachat",
+    "chat",
     "cli"
   ],
   "author": "Lars-Magnus Skog <ralphtheninja@riseup.net>",
