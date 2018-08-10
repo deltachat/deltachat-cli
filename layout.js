@@ -35,7 +35,7 @@ class Layout {
   }
 
   titleBar (state) {
-    let text = 'delta-x'
+    let text = 'Delta Chat'
     const opts = this.opts.titlebar
 
     if (opts.gradient) {
