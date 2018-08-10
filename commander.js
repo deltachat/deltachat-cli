@@ -27,6 +27,18 @@ class Commander {
           }
         }
       },
+      clear: {
+        help: {
+          syntax: 'clear',
+          description: 'Clears the log in the debug or status window.',
+          examples: [ '/clear' ]
+        },
+        run: () => {
+          if (!this._state.isChat()) {
+            this._state.currentPage().clear()
+          }
+        }
+      },
       'get-contacts': {
         help: {
           syntax: 'get-contacts',

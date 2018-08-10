@@ -104,6 +104,10 @@ class AbstractPage {
   append (line) {
     this._lines.push(line)
   }
+
+  clear () {
+    this._lines = []
+  }
 }
 
 class DebugPage extends AbstractPage {
@@ -204,6 +208,10 @@ class State {
 
   currentPage () {
     return this._pages[this._page]
+  }
+
+  isChat () {
+    return typeof this.currentPage().chatId === 'number'
   }
 
   nextPage () {
