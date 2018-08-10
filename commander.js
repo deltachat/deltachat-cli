@@ -18,12 +18,12 @@ class Commander {
             // Help about a specific command
             const cmd = this._commands[arg]
             if (cmd && cmd.help) {
-              this.status(renderHelp(cmd.help))
+              this.result(renderHelp(cmd.help))
             } else {
               this.error(`No help for ${arg}`)
             }
           } else {
-            this.status(renderCommands(this._commands))
+            this.result(renderCommands(this._commands))
           }
         }
       },
@@ -38,7 +38,7 @@ class Commander {
             const c = this._dc.getContact(id)
             return `${c.getNameAndAddress()} (id = ${c.getId()})`
           })
-          this.status([
+          this.result([
             `${chalk.bold('All Contacts:')}\n \n`,
             `${contacts.map(c => '  ' + c).join('\n')}`
           ].join(''))
@@ -128,7 +128,8 @@ class Commander {
 
   success (line) { this.status(chalk.green(line)) }
   error (line) { this.status(chalk.red(line)) }
-  status (line) { this._state.appendToStatusPage(` \n${line}`) }
+  result (line) { this.status(` \n${line}\n \n`) }
+  status (line) { this._state.appendToStatusPage(line) }
 }
 
 function renderHelp (help) {
