@@ -135,6 +135,20 @@ class StatusPage extends AbstractPage {
   }
 }
 
+class StarPage extends AbstractPage {
+  constructor (rc, dc) {
+    super('stars')
+    this._rc = rc
+    this._dc = dc
+  }
+
+  lines () {
+    return this._dc.getStarredMessages().map(msgId => {
+      return new ChatMessage(msgId, this._rc, this._dc)
+    })
+  }
+}
+
 class ChatPage extends AbstractPage {
   constructor (chatId, rc, dc) {
     super('')
@@ -175,6 +189,9 @@ class State {
 
     this._statusPage = new StatusPage()
     this._pages.push(this._statusPage)
+
+    this._starPage = new StarPage(rc, dc)
+    this._pages.push(this._starPage)
   }
 
   loadChats () {
@@ -255,6 +272,10 @@ class State {
       const leftName = left.name()
       const rightName = right.name()
       if (leftName === 'debug' || leftName === 'status') return -1
+
+      if (leftName === 'stars') return 1
+      if (rightName === 'stars') return -1
+
       if (leftName < rightName) return -1
       if (leftName === rightName) return 0
       return 1

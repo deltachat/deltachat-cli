@@ -47,7 +47,7 @@ Commands can be executed from anywhere, but the output of all commands show up i
 * `/delete-message <id>` delete a message
 * `/get-contacts` list all contacts
 * `/help [<command>]` show all commands and their short syntax or help about a specific `command`
-* `/star-message <id>` star a message (TODO: message shows up in a virtual chat with starred messages)
+* `/star-message <id>` star a message (starred messages show up in a virtual `stars` chat)
 
 ## Configuration
 
