@@ -18,12 +18,12 @@ class Commander {
             // Help about a specific command
             const cmd = this._commands[arg]
             if (cmd && cmd.help) {
-              this.result(renderHelp(cmd.help))
+              this._result(renderHelp(cmd.help))
             } else {
-              this.error(`No help for ${arg}`)
+              this._error(`No help for ${arg}`)
             }
           } else {
-            this.result(renderCommands(this._commands))
+            this._result(renderCommands(this._commands))
           }
         }
       },
@@ -50,7 +50,7 @@ class Commander {
             const c = this._dc.getContact(id)
             return `${c.getNameAndAddress()} (id = ${c.getId()})`
           })
-          this.result([
+          this._result([
             `${chalk.bold('All Contacts:')}\n \n`,
             `${contacts.map(c => '  ' + c).join('\n')}`
           ].join(''))
@@ -65,9 +65,9 @@ class Commander {
         run: (name, address) => {
           if (typeof name === 'string' && typeof address === 'string') {
             const id = this._dc.createContact(name, address)
-            this.success(`Contact ${id} created or updated!`)
+            this._success(`Contact ${id} created or updated!`)
           } else {
-            this.error('Invalid parameters!')
+            this._error('Invalid parameters!')
           }
         }
       },
@@ -80,12 +80,12 @@ class Commander {
         run: id => {
           const contact = this._dc.getContact(id)
           if (contact === null) {
-            return this.error(`Invalid contact id ${id}`)
+            return this._error(`Invalid contact id ${id}`)
           }
           if (this._dc.deleteContact(id)) {
-            this.success('Contact deleted successfully.')
+            this._success('Contact deleted successfully.')
           } else {
-            this.error('Failed to delete contact!')
+            this._error('Failed to delete contact!')
           }
         }
       },
@@ -98,12 +98,12 @@ class Commander {
         run: messageId => {
           const message = this._dc.getMessage(messageId)
           if (message === null) {
-            return this.error(`Invalid message id ${messageId}!`)
+            return this._error(`Invalid message id ${messageId}!`)
           }
           const chatId = message.getChatId()
           this._dc.deleteMessages(messageId)
           this._state.deleteMessage(chatId, Number(messageId))
-          this.success(`Message ${messageId} was deleted.`)
+          this._success(`Message ${messageId} was deleted.`)
         }
       },
       'star-message': {
@@ -115,11 +115,11 @@ class Commander {
         run: id => {
           const message = this._dc.getMessage(id)
           if (message === null) {
-            return this.error(`Invalid message id ${id}`)
+            return this._error(`Invalid message id ${id}`)
           }
           const star = message.isStarred()
           this._dc.starMessages(id, !star)
-          this.success(`Message ${id} was ${star ? 'un' : ''}starred.`)
+          this._success(`Message ${id} was ${star ? 'un' : ''}starred.`)
         }
       }
     }
@@ -140,7 +140,7 @@ class Commander {
     if (cmd && typeof cmd.run === 'function') {
       cmd.run.apply(this, args)
     } else {
-      this.error(`Unknown command: ${line[0]}`)
+      this._error(`Unknown command: ${line[0]}`)
     }
   }
 
@@ -189,10 +189,10 @@ class Commander {
     }
   }
 
-  success (line) { this.status(chalk.green(line)) }
-  error (line) { this.status(chalk.red(line)) }
-  result (line) { this.status(` \n${line}\n \n`) }
-  status (line) { this._state.appendToStatusPage(line) }
+  _success (line) { this._status(chalk.green(line)) }
+  _error (line) { this._status(chalk.red(line)) }
+  _result (line) { this._status(` \n${line}\n \n`) }
+  _status (line) { this._state.appendToStatusPage(line) }
 }
 
 function renderHelp (help) {

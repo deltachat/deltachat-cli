@@ -169,12 +169,12 @@ class State {
     this._pages = []
 
     if (this._rc.debug) {
-      this.debug = new DebugPage()
-      this._pages.push(this.debug)
+      this._debugPage = new DebugPage()
+      this._pages.push(this._debugPage)
     }
 
-    this.status = new StatusPage()
-    this._pages.push(this.status)
+    this._statusPage = new StatusPage()
+    this._pages.push(this._statusPage)
   }
 
   loadChats () {
@@ -202,12 +202,12 @@ class State {
   }
 
   appendToStatusPage (line) {
-    this.status.append(line)
+    this._statusPage.append(line)
   }
 
   logEvent (event, data1, data2) {
     if (this._rc.debug) {
-      this.debug.appendMessage(event, data1, data2)
+      this._debugPage.appendMessage(event, data1, data2)
     }
   }
 
