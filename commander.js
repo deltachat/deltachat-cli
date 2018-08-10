@@ -76,6 +76,22 @@ class Commander {
             this.error('Failed to delete contact!')
           }
         }
+      },
+      'star-message': {
+        help: {
+          syntax: 'star-message <id>',
+          description: 'Star/unstar a message.',
+          examples: [ '/star-message 49' ]
+        },
+        run: id => {
+          const message = this._dc.getMessage(id)
+          if (message === null) {
+            return this.error(`Invalid message id ${id}`)
+          }
+          const star = message.isStarred()
+          this._dc.starMessages(id, !star)
+          this.success(`Message ${id} was ${star ? 'un' : ''}starred`)
+        }
       }
     }
   }
