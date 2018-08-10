@@ -62,12 +62,12 @@ class App {
     dc.on('DC_EVENT_MSGS_CHANGED', (chatId, msgId) => {
       const msg = dc.getMessage(msgId)
       if (msg && msg.getState().isPending()) {
-        state.appendToChat(chatId, msgId)
+        state.appendMessage(chatId, msgId)
       }
     })
 
     dc.on('DC_EVENT_INCOMING_MSG', (chatId, msgId) => {
-      state.appendToChat(chatId, msgId)
+      state.appendMessage(chatId, msgId)
     })
 
     this.render()
