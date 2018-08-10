@@ -20,7 +20,7 @@ class Commander {
             if (cmd && cmd.help) {
               this.status(renderHelp(cmd.help))
             } else {
-              this.warning(`No help for ${arg}`)
+              this.error(`No help for ${arg}`)
             }
           } else {
             this.status(renderCommands(this._commands))
@@ -127,7 +127,6 @@ class Commander {
   }
 
   success (line) { this.status(chalk.green(line)) }
-  warning (line) { this.status(chalk.yellow(line)) }
   error (line) { this.status(chalk.red(line)) }
   status (line) { this._state.appendToStatusPage(` \n${line}`) }
 }
