@@ -17,6 +17,15 @@ npm i deltachat-cli -g
 deltachat --email user@site.org --mail_pw foo
 ```
 
+## Platform Support
+
+Currently `deltachat-cli` only works on Linux. This is completely dependent on the platform support of `deltachat-node`. If you're on a Debian based distro the following command should be enough to cover software and build dependencies.
+
+```
+sudo apt install libetpan-dev libssl-dev libsqlite3-dev libsasl2-dev \
+libbz2-dev zlib1g-dev meson ninja-build
+```
+
 ## Screenshots
 
 TODO
