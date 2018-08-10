@@ -32,10 +32,12 @@ TODO
 
 Commands can be executed from anywhere, but the output of all commands show up in the `status` window.
 
-* `/help [<command>]` show all commands and their short syntax or help about a specific `command`
 * `/create-contact <name> <address>` create a contact
 * `/delete-contact <id>` delete a contact (might fail if you have an open chat with that particular user)
+* `/delete-message <id>` delete a message
 * `/get-contacts` list all contacts
+* `/help [<command>]` show all commands and their short syntax or help about a specific `command`
+* `/star-message <id>` star a message (TODO: message shows up in a virtual chat with starred messages)
 
 ## Configuration
 
