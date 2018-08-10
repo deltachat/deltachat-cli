@@ -66,7 +66,8 @@ class AbstractPage {
   }
 
   render (state, width, height) {
-    const all = this._allLines = this._lines.reduce((accum, line) => {
+    const lines = this.lines()
+    const all = this._allLines = lines.reduce((accum, line) => {
       if (typeof line !== 'string') line = line.toString()
       line.split('\n').forEach(l => {
         accum.push.apply(accum, util.wrapAnsi(l, width))
@@ -84,6 +85,10 @@ class AbstractPage {
       all.length - height - scrollback,
       all.length - scrollback
     )
+  }
+
+  lines () {
+    return this._lines
   }
 
   name () {
