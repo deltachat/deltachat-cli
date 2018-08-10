@@ -123,6 +123,24 @@ class Commander {
       if (matchingCommands.length === 1) {
         this._state.input.set(`/${matchingCommands[0]} `)
       }
+      return
+    }
+
+    const chatId = this._state.currentPage().chatId
+    if (typeof chatId !== 'number') return
+
+    // nick completion
+    let nicks = this._dc.getChatContacts(chatId).map(id => {
+      return this._dc.getContact(id).getName()
+    }).sort()
+
+    const pattern = (/^(\w+)$/)
+    const match = pattern.exec(line)
+    if (match) {
+      nicks = nicks.filter(nick => nick.startsWith(match[0]))
+      if (nicks.length > 0) {
+        this._state.input.set(`@${nicks[0]}: `)
+      }
     }
   }
 
