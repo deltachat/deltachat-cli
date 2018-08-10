@@ -98,7 +98,7 @@ class Commander {
         run: messageId => {
           const message = this._dc.getMessage(messageId)
           if (message === null) {
-            return this.error(`Invalid message id ${messageId}`)
+            return this.error(`Invalid message id ${messageId}!`)
           }
           const chatId = message.getChatId()
           this._dc.deleteMessages(messageId)
