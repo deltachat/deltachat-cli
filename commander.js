@@ -77,6 +77,23 @@ class Commander {
           }
         }
       },
+      'delete-message': {
+        help: {
+          syntax: 'delete-message <id>',
+          description: 'Delete a message.',
+          examples: [ '/delete-message 112' ]
+        },
+        run: messageId => {
+          const message = this._dc.getMessage(messageId)
+          if (message === null) {
+            return this.error(`Invalid message id ${messageId}`)
+          }
+          const chatId = message.getChatId()
+          this._dc.deleteMessages(messageId)
+          this._state.deleteMessage(chatId, Number(messageId))
+          this.success(`Message ${messageId} was deleted.`)
+        }
+      },
       'star-message': {
         help: {
           syntax: 'star-message <id>',
@@ -90,7 +107,7 @@ class Commander {
           }
           const star = message.isStarred()
           this._dc.starMessages(id, !star)
-          this.success(`Message ${id} was ${star ? 'un' : ''}starred`)
+          this.success(`Message ${id} was ${star ? 'un' : ''}starred.`)
         }
       }
     }

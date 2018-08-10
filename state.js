@@ -5,14 +5,14 @@ const util = require('./util')
 
 class ChatMessage {
   constructor (msgId, rc, dc) {
-    this._msgId = msgId
+    this.msgId = msgId
     this._rc = rc
     this._dc = dc
   }
 
   toString () {
     const config = this._rc.layout.message
-    const msg = this._dc.getMessage(this._msgId)
+    const msg = this._dc.getMessage(this.msgId)
     if (msg === null) return ''
 
     const fromId = msg.getFromId()
@@ -141,6 +141,15 @@ class ChatPage extends AbstractPage {
   appendMessage (msgId) {
     this.append(new ChatMessage(msgId, this._rc, this._dc))
   }
+
+  deleteMessage (msgId) {
+    const index = this._lines.findIndex(line => {
+      return line.msgId === msgId
+    })
+    if (index !== -1) {
+      this._lines.splice(index, 1)
+    }
+  }
 }
 
 class State {
@@ -168,6 +177,10 @@ class State {
 
   appendMessage (chatId, msgId) {
     this._getChatPage(chatId).appendMessage(msgId)
+  }
+
+  deleteMessage (chatId, msgId) {
+    this._getChatPage(chatId).deleteMessage(msgId)
   }
 
   onEnter (line) {
