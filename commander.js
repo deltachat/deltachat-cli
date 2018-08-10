@@ -39,6 +39,21 @@ class Commander {
           }
         }
       },
+      'create-chat': {
+        help: {
+          syntax: 'create-chat <contactId>',
+          description: 'Create a normal chat with a single user.',
+          examples: [ '/create-chat 12' ]
+        },
+        run: contactId => {
+          const contact = this._dc.getContact(contactId)
+          if (contact === null) {
+            return this._error(`Invalid contact id ${contactId}`)
+          }
+          const chatId = this._dc.createChatByContactId(contactId)
+          this._success(`Created chat ${chatId} with contact ${contactId}.`)
+        }
+      },
       'get-contacts': {
         help: {
           syntax: 'get-contacts',
@@ -65,7 +80,7 @@ class Commander {
         run: (name, address) => {
           if (typeof name === 'string' && typeof address === 'string') {
             const id = this._dc.createContact(name, address)
-            this._success(`Contact ${id} created or updated!`)
+            this._success(`Contact ${id} created or updated.`)
           } else {
             this._error('Invalid parameters!')
           }

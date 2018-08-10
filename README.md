@@ -42,6 +42,7 @@ TODO
 Commands can be executed from anywhere, but the output of all commands show up in the `status` window.
 
 * `/clear` clears the window in debug or status window
+* `/create-chat <contactId>` create a normal chat with a single user
 * `/create-contact <name> <address>` create a contact
 * `/delete-contact <id>` delete a contact (might fail if you have an open chat with that particular user)
 * `/delete-message <id>` delete a message
