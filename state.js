@@ -196,8 +196,9 @@ class State {
 
   loadChats () {
     this._allChats().forEach(chatId => {
+      const chat = this._getChatPage(chatId)
       const messageIds = this._dc.getChatMessages(chatId, 0, 0)
-      messageIds.forEach(messageId => this.appendMessage(chatId, messageId))
+      messageIds.forEach(messageId => chat.appendMessage(messageId))
     })
   }
 
