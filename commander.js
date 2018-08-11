@@ -66,7 +66,7 @@ class Commander {
           if (chat === null) {
             return this._error(`Invalid chat id ${id}!`)
           }
-          this._dc.deleteChat(id)
+          this._state.deleteChat(id)
           this._success('Chat deleted successfully.')
         }
       },

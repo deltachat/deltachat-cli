@@ -216,6 +216,19 @@ class State {
     return chatId
   }
 
+  deleteChat (chatId) {
+    this._dc.deleteChat(chatId)
+    const index = this._pages.findIndex(page => {
+      return page.chatId === chatId
+    })
+    if (index !== -1) {
+      if (index <= this._page) {
+        this._page--
+      }
+      this._pages.splice(index, 1)
+    }
+  }
+
   onEnter (line) {
     const page = this.currentPage()
     if (typeof page.chatId === 'number') {
