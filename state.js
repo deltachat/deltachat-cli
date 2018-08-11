@@ -4,15 +4,15 @@ const chalk = require('chalk')
 const util = require('./util')
 
 class ChatMessage {
-  constructor (msgId, rc, dc) {
-    this.msgId = msgId
+  constructor (messageId, rc, dc) {
+    this.messageId = messageId
     this._rc = rc
     this._dc = dc
   }
 
   toString () {
     const config = this._rc.layout.message
-    const msg = this._dc.getMessage(this.msgId)
+    const msg = this._dc.getMessage(this.messageId)
     if (msg === null) return ''
 
     const fromId = msg.getFromId()
@@ -143,8 +143,8 @@ class StarPage extends AbstractPage {
   }
 
   lines () {
-    return this._dc.getStarredMessages().map(msgId => {
-      return new ChatMessage(msgId, this._rc, this._dc)
+    return this._dc.getStarredMessages().map(messageId => {
+      return new ChatMessage(messageId, this._rc, this._dc)
     })
   }
 }
@@ -161,13 +161,13 @@ class ChatPage extends AbstractPage {
     return `#${this._dc.getChat(this.chatId).getName()}`
   }
 
-  appendMessage (msgId) {
-    this.append(new ChatMessage(msgId, this._rc, this._dc))
+  appendMessage (messageId) {
+    this.append(new ChatMessage(messageId, this._rc, this._dc))
   }
 
-  deleteMessage (msgId) {
+  deleteMessage (messageId) {
     const index = this._lines.findIndex(line => {
-      return line.msgId === msgId
+      return line.messageId === messageId
     })
     if (index !== -1) {
       this._lines.splice(index, 1)
@@ -196,17 +196,18 @@ class State {
 
   loadChats () {
     this._allChats().forEach(chatId => {
-      const msgIds = this._dc.getChatMessages(chatId, 0, 0)
-      msgIds.forEach(msgId => this.appendMessage(chatId, msgId))
+      const messageIds = this._dc.getChatMessages(chatId, 0, 0)
+      messageIds.forEach(messageId => this.appendMessage(chatId, messageId))
     })
   }
 
-  appendMessage (chatId, msgId) {
-    this._getChatPage(chatId).appendMessage(msgId)
+  appendMessage (chatId, messageId) {
+    this._getChatPage(chatId).appendMessage(messageId)
   }
 
-  deleteMessage (chatId, msgId) {
-    this._getChatPage(chatId).deleteMessage(msgId)
+  deleteMessage (chatId, messageId) {
+    this._dc.deleteMessages(messageId)
+    this._getChatPage(chatId).deleteMessage(messageId)
   }
 
   onEnter (line) {
@@ -245,8 +246,6 @@ class State {
     this._page = newPage < 0 ? this._pages.length - 1 : newPage
   }
 
-  // TODO pages are not sorted correctly, should be sorted on
-  // chat name
   _getChatPage (chatId) {
     let page = this._pages.find(p => p.chatId === chatId)
     if (!page) {

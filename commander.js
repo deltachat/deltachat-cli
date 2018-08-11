@@ -132,7 +132,6 @@ class Commander {
             return this._error(`Invalid message id ${messageId}!`)
           }
           const chatId = message.getChatId()
-          this._dc.deleteMessages(messageId)
           this._state.deleteMessage(chatId, Number(messageId))
           this._success(`Message ${messageId} was deleted.`)
         }
