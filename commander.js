@@ -21,7 +21,7 @@ class Commander {
             if (cmd && cmd.help) {
               this._result(renderHelp(cmd.help))
             } else {
-              this._error(`No help for ${arg}`)
+              this._error(`No help for ${arg}!`)
             }
           } else {
             this._result(renderCommands(this._commands))
@@ -49,7 +49,7 @@ class Commander {
         run: contactId => {
           const contact = this._dc.getContact(contactId)
           if (contact === null) {
-            return this._error(`Invalid contact id ${contactId}`)
+            return this._error(`Invalid contact id ${contactId}!`)
           }
           const chatId = this._dc.createChatByContactId(contactId)
           this._success(`Created chat ${chatId} with contact ${contactId}.`)
@@ -64,7 +64,7 @@ class Commander {
         run: id => {
           const chat = this._dc.getChat(id)
           if (chat === null) {
-            return this._error(`Invalid chat id ${id}`)
+            return this._error(`Invalid chat id ${id}!`)
           }
           this._dc.deleteChat(id)
           this._success('Chat deleted successfully.')
@@ -111,7 +111,7 @@ class Commander {
         run: id => {
           const contact = this._dc.getContact(id)
           if (contact === null) {
-            return this._error(`Invalid contact id ${id}`)
+            return this._error(`Invalid contact id ${id}!`)
           }
           if (this._dc.deleteContact(id)) {
             this._success('Contact deleted successfully.')
@@ -145,7 +145,7 @@ class Commander {
         run: id => {
           const message = this._dc.getMessage(id)
           if (message === null) {
-            return this._error(`Invalid message id ${id}`)
+            return this._error(`Invalid message id ${id}!`)
           }
           const star = message.isStarred()
           this._dc.starMessages(id, !star)
@@ -170,7 +170,7 @@ class Commander {
     if (cmd && typeof cmd.run === 'function') {
       cmd.run.apply(this, args)
     } else {
-      this._error(`Unknown command: ${line[0]}`)
+      this._error(`Unknown command: ${line[0]}!`)
     }
   }
 
