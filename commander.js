@@ -63,6 +63,7 @@ class Commander {
         },
         run: id => {
           id = id || this._state.currentPage().chatId
+          if (!id) return
           const chat = this._dc.getChat(id)
           if (chat === null) {
             return this._error(`Invalid chat id ${id}!`)
@@ -79,6 +80,7 @@ class Commander {
         },
         run: id => {
           id = id || this._state.currentPage().chatId
+          if (!id) return
           const chat = this._dc.getChat(id)
           if (chat === null) {
             return this._error(`Invalid chat id ${id}!`)
