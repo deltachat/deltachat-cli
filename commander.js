@@ -51,7 +51,7 @@ class Commander {
           if (contact === null) {
             return this._error(`Invalid contact id ${contactId}!`)
           }
-          const chatId = this._dc.createChatByContactId(contactId)
+          const chatId = this._state.createChatByContactId(contactId)
           this._success(`Created chat ${chatId} with contact ${contactId}.`)
         }
       },

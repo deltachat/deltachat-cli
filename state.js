@@ -210,6 +210,12 @@ class State {
     this._getChatPage(chatId).deleteMessage(messageId)
   }
 
+  createChatByContactId (contactId) {
+    const chatId = this._dc.createChatByContactId(contactId)
+    this._getChatPage(chatId)
+    return chatId
+  }
+
   onEnter (line) {
     const page = this.currentPage()
     if (typeof page.chatId === 'number') {
@@ -250,6 +256,7 @@ class State {
     let page = this._pages.find(p => p.chatId === chatId)
     if (!page) {
       page = new ChatPage(chatId, this._rc, this._dc)
+      // TODO we might want to tweak current this._page here
       this._pages.push(page)
       this._sortPages()
     }
