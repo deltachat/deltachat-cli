@@ -217,11 +217,11 @@ class State {
   }
 
   deleteChat (chatId) {
-    this._dc.deleteChat(chatId)
     const index = this._pages.findIndex(page => {
       return page.chatId === chatId
     })
     if (index !== -1) {
+      this._dc.deleteChat(chatId)
       if (index <= this._page) {
         this._page--
       }
