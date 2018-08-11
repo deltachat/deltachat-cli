@@ -1,4 +1,5 @@
 const chalk = require('chalk')
+const lcp = require('lcp')
 
 class Commander {
   constructor (state, dc) {
@@ -182,6 +183,11 @@ class Commander {
       var matchingCommands = commands.filter(cmd => cmd.startsWith(soFar))
       if (matchingCommands.length === 1) {
         this._state.input.set(`/${matchingCommands[0]} `)
+      } else if (matchingCommands.length > 1) {
+        const prefix = lcp.findLCP(matchingCommands)
+        if (prefix.length > soFar.length) {
+          this._state.input.set(`/${prefix}`)
+        }
       }
       return
     }

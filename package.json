@@ -27,6 +27,7 @@
     "chalk": "^2.4.1",
     "deltachat-node": "deltachat/deltachat-node#master",
     "gradient-string": "^1.1.0",
+    "lcp": "^1.1.0",
     "mkdirp": "^0.5.1",
     "neat-log": "^3.1.0",
     "osenv": "^0.1.5",
