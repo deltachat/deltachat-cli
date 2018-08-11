@@ -271,13 +271,13 @@ class State {
     this._pages.sort((left, right) => {
       const leftName = left.name()
       const rightName = right.name()
-      if (leftName === 'debug' || leftName === 'status') return -1
-
-      if (leftName === 'stars') return 1
-      if (rightName === 'stars') return -1
+      if (leftName === 'debug' ||
+          leftName === 'status' ||
+          leftName === 'stars') return -1
 
       if (leftName < rightName) return -1
       if (leftName === rightName) return 0
+
       return 1
     })
   }
