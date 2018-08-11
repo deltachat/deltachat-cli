@@ -11,13 +11,18 @@ class App {
     const layout = new Layout(rc.layout)
     const render = layout.render.bind(layout)
 
+    const userInput = () => {
+      const arr = state.userInput
+      return arr.length > 0 ? arr[0].question() : ''
+    }
+
     const { input, use } = neatLog(render, {
       fullscreen: true,
       logspeed: rc.logspeed,
       state: state,
       style: (start, cursor, end) => {
         if (!cursor) cursor = ' '
-        return start + chalk.bgWhite(cursor) + end
+        return userInput() + start + chalk.bgWhite(cursor) + end
       }
     })
 
@@ -41,8 +46,25 @@ class App {
     input.on('alt-p', pageUp)
     input.on('alt-n', pageDown)
 
-    input.on('enter', commander.onEnter.bind(commander))
-    input.on('tab', commander.onTab.bind(commander))
+    input.on('enter', line => {
+      if (state.userInput.length > 0) {
+        line = line.trim().toLowerCase()
+        const answer = state.userInput[0].answers[line]
+        if (typeof answer === 'function') {
+          answer()
+          state.userInput.shift()
+        }
+      } else {
+        commander.onEnter(line)
+      }
+    })
+
+    input.on('tab', () => {
+      if (state.userInput.length === 0) {
+        commander.onTab()
+      }
+    })
+
     input.on('up', commander.onUp.bind(commander))
     input.on('down', commander.onDown.bind(commander))
 
@@ -61,8 +83,12 @@ class App {
 
     dc.on('DC_EVENT_MSGS_CHANGED', (chatId, msgId) => {
       const msg = dc.getMessage(msgId)
-      if (msg && msg.getState().isPending()) {
+      if (msg === null) return
+
+      if (msg.getState().isPending()) {
         state.appendMessage(chatId, msgId)
+      } else if (msg.isDeadDrop()) {
+        state.queueDeadDropMessage(msg)
       }
     })
 

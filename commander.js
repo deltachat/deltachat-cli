@@ -52,7 +52,7 @@ class Commander {
             return this._error(`Invalid contact id ${contactId}!`)
           }
           const chatId = this._state.createChatByContactId(contactId)
-          this._success(`Created chat ${chatId} with contact ${contactId}.`)
+          this._info(`Created chat ${chatId} with contact ${contactId}.`)
         }
       },
       'delete-chat': {
@@ -67,7 +67,7 @@ class Commander {
             return this._error(`Invalid chat id ${id}!`)
           }
           this._state.deleteChat(Number(id))
-          this._success('Chat deleted successfully.')
+          this._info('Chat deleted successfully.')
         }
       },
       'get-contacts': {
@@ -96,7 +96,7 @@ class Commander {
         run: (name, address) => {
           if (typeof name === 'string' && typeof address === 'string') {
             const id = this._dc.createContact(name, address)
-            this._success(`Contact ${id} created or updated.`)
+            this._info(`Contact ${id} created or updated.`)
           } else {
             this._error('Invalid parameters!')
           }
@@ -114,7 +114,7 @@ class Commander {
             return this._error(`Invalid contact id ${id}!`)
           }
           if (this._dc.deleteContact(id)) {
-            this._success('Contact deleted successfully.')
+            this._info('Contact deleted successfully.')
           } else {
             this._error('Failed to delete contact!')
           }
@@ -133,7 +133,7 @@ class Commander {
           }
           const chatId = message.getChatId()
           this._state.deleteMessage(chatId, Number(messageId))
-          this._success(`Message ${messageId} was deleted.`)
+          this._info(`Message ${messageId} was deleted.`)
         }
       },
       'star-message': {
@@ -149,7 +149,7 @@ class Commander {
           }
           const star = message.isStarred()
           this._dc.starMessages(id, !star)
-          this._success(`Message ${id} was ${star ? 'un' : ''}starred.`)
+          this._info(`Message ${id} was ${star ? 'un' : ''}starred.`)
         }
       }
     }
@@ -224,10 +224,17 @@ class Commander {
     }
   }
 
-  _success (line) { this._status(chalk.green(line)) }
-  _error (line) { this._status(chalk.red(line)) }
-  _result (line) { this._status(` \n${line}\n \n`) }
-  _status (line) { this._state.appendToStatusPage(line) }
+  _info (line) {
+    this._state.info(line)
+  }
+
+  _error (line) {
+    this._state.error(line)
+  }
+
+  _result (line) {
+    this._state.result(line)
+  }
 }
 
 function renderHelp (help) {

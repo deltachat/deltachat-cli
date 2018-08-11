@@ -1,4 +1,5 @@
 const events = require('deltachat-node/events')
+const constants = require('deltachat-node/constants')
 const boxen = require('boxen')
 const chalk = require('chalk')
 const util = require('./util')
@@ -177,6 +178,7 @@ class ChatPage extends AbstractPage {
 
 class State {
   constructor (rc, dc) {
+    this.userInput = []
     this._rc = rc
     this._dc = dc
     this._page = 0
@@ -196,9 +198,52 @@ class State {
 
   loadChats () {
     this._allChats().forEach(chatId => {
-      const chat = this._getChatPage(chatId)
       const messageIds = this._dc.getChatMessages(chatId, 0, 0)
-      messageIds.forEach(messageId => chat.appendMessage(messageId))
+      if (chatId !== constants.DC_CHAT_ID_DEADDROP) {
+        const chat = this._getChatPage(chatId)
+        messageIds.forEach(id => chat.appendMessage(id))
+      }
+    })
+  }
+
+  queueDeadDropMessage (message) {
+    const contactId = message.getFromId()
+    const index = this.userInput.findIndex(obj => {
+      return obj.contactId === contactId
+    })
+
+    if (index !== -1) return
+
+    const contact = this._dc.getContact(contactId)
+
+    this.userInput.push({
+      contactId: contactId,
+      question: () => {
+        return chalk.yellow(
+          `Chat with ${contact.getNameAndAddress()} (yes/no/never)? `
+        )
+      },
+      answers: {
+        yes: () => {
+          if (this._dc.getContacts().indexOf(contactId) === -1) {
+            const address = contact.getAddress()
+            const name = contact.getName() || address.split('@')[0]
+            this._dc.createContact(name, address)
+            this.info(`Added contact ${name} (${address})`)
+          }
+          const chatId = this.createChatByContactId(contactId)
+          const messageIds = this._dc.getChatMessages(chatId, 0, 0)
+          const chat = this._getChatPage(chatId)
+          messageIds.forEach(id => chat.appendMessage(id))
+          this._selectChatPage(chatId)
+        },
+        no: () => { /* do nothing */ },
+        never: () => {
+          this._dc.blockContact(contactId, true)
+          const name = contact.getNameAndAddress()
+          this.warning(`Blocked contact ${name} (id = ${contactId})`)
+        }
+      }
     })
   }
 
@@ -239,8 +284,20 @@ class State {
     }
   }
 
-  appendToStatusPage (line) {
-    this._statusPage.append(line)
+  info (line) {
+    this._statusPage.append(chalk.green(line))
+  }
+
+  result (line) {
+    this._statusPage.append(` \n${line}\n \n`)
+  }
+
+  warning (line) {
+    this._statusPage.append(chalk.yellow(line))
+  }
+
+  error (line) {
+    this._statusPage.append(chalk.red(line))
   }
 
   logEvent (event, data1, data2) {
@@ -264,6 +321,13 @@ class State {
   prevPage () {
     const newPage = this._page - 1
     this._page = newPage < 0 ? this._pages.length - 1 : newPage
+  }
+
+  _selectChatPage (chatId) {
+    const index = this._pages.findIndex(p => p.chatId === chatId)
+    if (index !== -1) {
+      this._page = index
+    }
   }
 
   _getChatPage (chatId) {
