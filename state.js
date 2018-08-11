@@ -197,12 +197,10 @@ class State {
   }
 
   loadChats () {
-    this._allChats().forEach(chatId => {
+    this._getChats().forEach(chatId => {
+      const chat = this._getChatPage(chatId)
       const messageIds = this._dc.getChatMessages(chatId, 0, 0)
-      if (chatId !== constants.DC_CHAT_ID_DEADDROP) {
-        const chat = this._getChatPage(chatId)
-        messageIds.forEach(id => chat.appendMessage(id))
-      }
+      messageIds.forEach(id => chat.appendMessage(id))
     })
   }
 
@@ -354,14 +352,8 @@ class State {
     return page
   }
 
-  _allChats () {
-    const result = []
-    const list = this._dc.getChatList(0, '', 0)
-    const count = list.getCount()
-    for (let i = 0; i < count; i++) {
-      result.push(list.getChatId(i))
-    }
-    return result
+  _getChats () {
+    return this._dc.getChats(constants.DC_GCL_NO_SPECIALS)
   }
 
   _sortPages () {
