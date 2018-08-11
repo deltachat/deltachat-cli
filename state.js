@@ -1,5 +1,5 @@
-const events = require('deltachat-node/events')
-const constants = require('deltachat-node/constants')
+const EVENTS = require('deltachat-node/events')
+const C = require('deltachat-node/constants')
 const boxen = require('boxen')
 const chalk = require('chalk')
 const util = require('./util')
@@ -125,7 +125,7 @@ class DebugPage extends AbstractPage {
     // TODO we might want to tweak the verbosity here since
     // there are rather many info events
     if (event === 2091) return
-    const eventStr = chalk.yellow(events[event] || '<unknown-event>')
+    const eventStr = chalk.yellow(EVENTS[event] || '<unknown-event>')
     this.append(`${eventStr} (${chalk.green(event)}) ${data1} ${data2}`)
   }
 }
@@ -353,7 +353,7 @@ class State {
   }
 
   _getChats () {
-    return this._dc.getChats(constants.DC_GCL_NO_SPECIALS)
+    return this._dc.getChats(C.DC_GCL_NO_SPECIALS)
   }
 
   _sortPages () {

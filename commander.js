@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const lcp = require('lcp')
+const C = require('deltachat-node/constants')
 
 class Commander {
   constructor (state, dc) {
@@ -53,6 +54,20 @@ class Commander {
           }
           const chatId = this._state.createChatByContactId(contactId)
           this._info(`Created chat ${chatId} with contact ${contactId}.`)
+        }
+      },
+      'get-chats': {
+        help: {
+          syntax: 'get-chats',
+          description: 'List all chats.',
+          examples: [ '/get-chats' ]
+        },
+        run: () => {
+          let chats = this._dc.getChats(C.DC_GCL_NO_SPECIALS)
+          chats = chats
+            .concat(this._dc.getChats(C.DC_GCL_ARCHIVED_ONLY))
+            .map(id => this._dc.getChat(id))
+          this._result(renderChats(chats))
         }
       },
       'delete-chat': {
@@ -272,8 +287,22 @@ function renderCommands (commands) {
     return commands[key].help.syntax
   })
   return [
-    `${chalk.bold('All commands:')}\n \n`,
+    `${chalk.bold('All Commands:')}\n \n`,
     `${syntaxes.map(s => '  ' + s).join('\n')}`
+  ].join('')
+}
+
+function renderChats (chats) {
+  const lines = chats.map(c => {
+    let line = `  ${c.getName()} (id = ${c.getId()})`
+    if (c.getArchived()) {
+      line += ' (archived)'
+    }
+    return line
+  })
+  return [
+    `${chalk.bold('All Chats:')}\n \n`,
+    `${lines.join('\n')}`
   ].join('')
 }
 
