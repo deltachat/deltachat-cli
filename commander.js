@@ -68,7 +68,23 @@ class Commander {
             return this._error(`Invalid chat id ${id}!`)
           }
           this._state.deleteChat(Number(id))
-          this._info(`Chat ${id} deleted successfully`)
+          this._info(`Chat ${id} deleted successfully.`)
+        }
+      },
+      'archive-chat': {
+        help: {
+          syntax: 'archive-chat [<id>]',
+          description: 'Archive a chat. <id> defaults to current chat.',
+          examples: [ '/archive-chat', '/archive-chat 12' ]
+        },
+        run: id => {
+          id = id || this._state.currentPage().chatId
+          const chat = this._dc.getChat(id)
+          if (chat === null) {
+            return this._error(`Invalid chat id ${id}!`)
+          }
+          this._state.archiveChat(Number(id))
+          this._info(`Chat ${id} archived successfully.`)
         }
       },
       'get-contacts': {

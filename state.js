@@ -275,6 +275,19 @@ class State {
     }
   }
 
+  archiveChat (chatId) {
+    const index = this._pages.findIndex(page => {
+      return page.chatId === chatId
+    })
+    if (index !== -1) {
+      this._dc.archiveChat(chatId, true)
+      if (index <= this._page) {
+        this._page--
+      }
+      this._pages.splice(index, 1)
+    }
+  }
+
   onEnter (line) {
     const page = this.currentPage()
     if (typeof page.chatId === 'number') {

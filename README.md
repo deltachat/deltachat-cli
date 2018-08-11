@@ -43,6 +43,7 @@ TODO
 
 Commands can be executed from anywhere, but the output of all commands show up in the `status` window.
 
+* `/archive-chat [<id>]` Archive a chat. If `<id>` is omitted, defaults to current chat.
 * `/clear` Clear the debug or status window.
 * `/create-chat <contactId>` Create a normal chat with a single user.
 * `/create-contact <name> <address>` Create a contact.
