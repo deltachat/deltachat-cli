@@ -55,6 +55,21 @@ class Commander {
           this._success(`Created chat ${chatId} with contact ${contactId}.`)
         }
       },
+      'delete-chat': {
+        help: {
+          syntax: 'delete-chat <id>',
+          description: 'Delete a chat.',
+          examples: [ '/delete-chat 12' ]
+        },
+        run: id => {
+          const chat = this._dc.getChat(id)
+          if (chat === null) {
+            return this._error(`Invalid chat id ${id}`)
+          }
+          this._dc.deleteChat(id)
+          this._success('Chat deleted successfully.')
+        }
+      },
       'get-contacts': {
         help: {
           syntax: 'get-contacts',
