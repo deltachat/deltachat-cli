@@ -57,17 +57,18 @@ class Commander {
       },
       'delete-chat': {
         help: {
-          syntax: 'delete-chat <id>',
-          description: 'Delete a chat.',
-          examples: [ '/delete-chat 12' ]
+          syntax: 'delete-chat [<id>]',
+          description: 'Delete a chat. <id> defaults to current chat.',
+          examples: [ '/delete-chat', '/delete-chat 12' ]
         },
         run: id => {
+          id = id || this._state.currentPage().chatId
           const chat = this._dc.getChat(id)
           if (chat === null) {
             return this._error(`Invalid chat id ${id}!`)
           }
           this._state.deleteChat(Number(id))
-          this._info('Chat deleted successfully.')
+          this._info(`Chat ${id} deleted successfully`)
         }
       },
       'get-contacts': {

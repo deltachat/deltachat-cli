@@ -43,15 +43,15 @@ TODO
 
 Commands can be executed from anywhere, but the output of all commands show up in the `status` window.
 
-* `/clear` clears the window in debug or status window
-* `/create-chat <contactId>` create a normal chat with a single user
-* `/create-contact <name> <address>` create a contact
-* `/delete-chat <id>` delete a chat
-* `/delete-contact <id>` delete a contact (might fail if you have an open chat with that particular user)
-* `/delete-message <id>` delete a message
-* `/get-contacts` list all contacts
-* `/help [<command>]` show all commands and their short syntax or help about a specific `command`
-* `/star-message <id>` star a message (starred messages show up in a virtual `stars` chat)
+* `/clear` Clear the debug or status window.
+* `/create-chat <contactId>` Create a normal chat with a single user.
+* `/create-contact <name> <address>` Create a contact.
+* `/delete-chat [<id>]` Delete a chat. If `<id>` is omitted, defaults to current chat.
+* `/delete-contact <id>` Delete a contact (might fail if you have an open chat with that particular user).
+* `/delete-message <id>` Delete a message.
+* `/get-contacts` List all contacts.
+* `/help [<command>]` Show all commands and their short syntax or help about a specific `command`.
+* `/star-message <id>` Star a message (starred messages show up in a virtual `stars` chat).
 
 ## Configuration
 
