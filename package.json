@@ -1,6 +1,6 @@
 {
   "name": "deltachat-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Delta Chat on the command line",
   "main": "index.js",
   "scripts": {
