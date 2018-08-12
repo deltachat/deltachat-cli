@@ -2,6 +2,7 @@
 
 > `Delta Chat` on the command line.
 
+[![npm](https://img.shields.io/npm/v/deltachat-cli.svg)](https://www.npmjs.com/package/deltachat-cli)
 [![Build Status](https://travis-ci.org/ralphtheninja/deltachat-cli.svg?branch=master)](https://travis-ci.org/ralphtheninja/deltachat-cli)
 ![Node version](https://img.shields.io/node/v/deltachat-cli.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
