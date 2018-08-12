@@ -1,10 +1,7 @@
 const path = require('path')
 const osenv = require('osenv')
 
-// TODO
-// 1. should do validation on configuration values
-// 2. document that textColor, bgColor are chalk values
-// and gradient is based on the gradient-string module
+// TODO we should do validation on configuration values
 module.exports = require('rc')('deltachat_cli', {
   home: path.join(osenv.home(), '.deltachat_cli'),
   layout: {

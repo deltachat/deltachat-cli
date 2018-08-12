@@ -67,7 +67,24 @@ Run `deltachat` using current folder to store data:
 deltachat --email user@site.org --mail_pw foo --home .
 ```
 
-TODO mention colors and `rc` in general.
+You can use environment variables instead of command line arguments:
+
+
+```sh
+deltachat_cli_email=user@site.org deltachat_cli_mail_pw=foo deltachat
+```
+
+You can also write a custom configuration file in either `.json` or `.ini` format. Please see the [`rc` documentation](https://github.com/dominictarr/rc#readme) for more details.
+
+### Styles
+
+It's possible to configure various styles in the application.
+
+* Text colors and background colors are taken from [`chalk`](https://github.com/chalk/chalk#readme).
+* Gradient types are taken from the [`gradient-string`](https://github.com/bokub/gradient-string) module.
+* Box styles (for chat messages) are taken from the [`boxen`](https://github.com/sindresorhus/boxen#readme) module.
+
+Please consult [`rc.js`](./rc.js) for default values.
 
 ## Kudos and Inspiration
 
