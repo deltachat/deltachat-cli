@@ -36,6 +36,7 @@ TODO
 * `ctrl-p` previous window
 * `alt-n` _or_ `pagedown` scroll down
 * `alt-p` _or_ `pageup` scroll up
+* `alt-<n>` switch to page `<n>` where n is between 1 and 9
 * `enter` accept input from the user
 * `tab` auto completes commands (starting with `/`) and nicks
 

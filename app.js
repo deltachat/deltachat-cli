@@ -46,6 +46,10 @@ class App {
     input.on('alt-p', pageUp)
     input.on('alt-n', pageDown)
 
+    for (let i = 1; i <= 9; ++i) {
+      input.on(`alt-${i}`, () => state.setCurrentPageIndex(i - 1))
+    }
+
     input.on('enter', line => {
       if (state.userInput.length > 0) {
         line = line.trim().toLowerCase()

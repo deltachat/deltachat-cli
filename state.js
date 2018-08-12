@@ -334,6 +334,12 @@ class State {
     return this._page
   }
 
+  setCurrentPageIndex (index) {
+    if (index >= 0 && index <= this._pages.length - 1) {
+      this._page = index
+    }
+  }
+
   isChat () {
     return typeof this.currentPage().chatId === 'number'
   }
