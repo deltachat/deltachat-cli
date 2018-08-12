@@ -330,6 +330,10 @@ class State {
     return this._pages[this._page]
   }
 
+  currentPageIndex () {
+    return this._page
+  }
+
   isChat () {
     return typeof this.currentPage().chatId === 'number'
   }
