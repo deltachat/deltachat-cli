@@ -9,23 +9,24 @@ class Commander {
     this._history = []
 
     this._commands = {
-      help: {
+      'archive-chat': {
         help: {
-          syntax: 'help [<command>]',
-          description: 'Displays the documentation for the given command.',
-          examples: [ '/help', '/help help' ]
+          syntax: 'archive-chat [<id>]',
+          description: 'Archive a chat. <id> defaults to current chat.',
+          examples: [ '/archive-chat', '/archive-chat 12' ]
         },
-        run: arg => {
-          if (typeof arg === 'string') {
-            // Help about a specific command
-            const cmd = this._commands[arg]
-            if (cmd && cmd.help) {
-              this._result(renderHelp(cmd.help))
-            } else {
-              this._error(`No help for ${arg}!`)
-            }
+        run: id => {
+          id = id || this._state.currentPage().chatId
+          if (!id) return
+          const chat = this._dc.getChat(id)
+          if (chat === null) {
+            return this._error(`Invalid chat id ${id}!`)
+          }
+          if (!chat.getArchived()) {
+            this._state.archiveChat(Number(id))
+            this._info(`Chat ${id} archived successfully.`)
           } else {
-            this._result(renderCommands(this._commands))
+            this._info(`Chat ${id} is already archived.`)
           }
         }
       },
@@ -56,18 +57,19 @@ class Commander {
           this._info(`Created chat ${chatId} with contact ${contactId}.`)
         }
       },
-      'get-chats': {
+      'create-contact': {
         help: {
-          syntax: 'get-chats',
-          description: 'List all chats.',
-          examples: [ '/get-chats' ]
+          syntax: 'create-contact <name> <address>',
+          description: 'Create a contact.',
+          examples: [ '/create-contact Alice alice@site.org' ]
         },
-        run: () => {
-          let chats = this._dc.getChats(C.DC_GCL_NO_SPECIALS)
-          chats = chats
-            .concat(this._dc.getChats(C.DC_GCL_ARCHIVED_ONLY))
-            .map(id => this._dc.getChat(id))
-          this._result(renderChats(chats))
+        run: (name, address) => {
+          if (typeof name === 'string' && typeof address === 'string') {
+            const id = this._dc.createContact(name, address)
+            this._info(`Contact ${id} created or updated.`)
+          } else {
+            this._error('Invalid parameters!')
+          }
         }
       },
       'delete-chat': {
@@ -85,78 +87,6 @@ class Commander {
           }
           this._state.deleteChat(Number(id))
           this._info(`Chat ${id} deleted successfully.`)
-        }
-      },
-      'archive-chat': {
-        help: {
-          syntax: 'archive-chat [<id>]',
-          description: 'Archive a chat. <id> defaults to current chat.',
-          examples: [ '/archive-chat', '/archive-chat 12' ]
-        },
-        run: id => {
-          id = id || this._state.currentPage().chatId
-          if (!id) return
-          const chat = this._dc.getChat(id)
-          if (chat === null) {
-            return this._error(`Invalid chat id ${id}!`)
-          }
-          if (!chat.getArchived()) {
-            this._state.archiveChat(Number(id))
-            this._info(`Chat ${id} archived successfully.`)
-          } else {
-            this._info(`Chat ${id} is already archived.`)
-          }
-        }
-      },
-      'unarchive-chat': {
-        help: {
-          syntax: 'unarchive-chat <id>',
-          description: 'Unarchive a chat.',
-          examples: [ '/unarchive-chat 12' ]
-        },
-        run: id => {
-          const chat = this._dc.getChat(id)
-          if (chat === null) {
-            return this._error(`Invalid chat id ${id}!`)
-          }
-          if (chat.getArchived()) {
-            this._state.unArchiveChat(Number(id))
-            this._info(`Chat ${id} unarchived successfully.`)
-          } else {
-            this._info(`Chat ${id} is already unarchived.`)
-          }
-        }
-      },
-      'get-contacts': {
-        help: {
-          syntax: 'get-contacts',
-          description: 'Displays all contacts.',
-          examples: [ '/get-contacts' ]
-        },
-        run: () => {
-          const contacts = this._dc.getContacts().map(id => {
-            const c = this._dc.getContact(id)
-            return `${c.getNameAndAddress()} (id = ${c.getId()})`
-          })
-          this._result([
-            `${chalk.bold('All Contacts:')}\n \n`,
-            `${contacts.map(c => '  ' + c).join('\n')}`
-          ].join(''))
-        }
-      },
-      'create-contact': {
-        help: {
-          syntax: 'create-contact <name> <address>',
-          description: 'Create a contact.',
-          examples: [ '/create-contact Alice alice@site.org' ]
-        },
-        run: (name, address) => {
-          if (typeof name === 'string' && typeof address === 'string') {
-            const id = this._dc.createContact(name, address)
-            this._info(`Contact ${id} created or updated.`)
-          } else {
-            this._error('Invalid parameters!')
-          }
         }
       },
       'delete-contact': {
@@ -193,6 +123,57 @@ class Commander {
           this._info(`Message ${messageId} was deleted.`)
         }
       },
+      'get-chats': {
+        help: {
+          syntax: 'get-chats',
+          description: 'List all chats.',
+          examples: [ '/get-chats' ]
+        },
+        run: () => {
+          let chats = this._dc.getChats(C.DC_GCL_NO_SPECIALS)
+          chats = chats
+            .concat(this._dc.getChats(C.DC_GCL_ARCHIVED_ONLY))
+            .map(id => this._dc.getChat(id))
+          this._result(renderChats(chats))
+        }
+      },
+      'get-contacts': {
+        help: {
+          syntax: 'get-contacts',
+          description: 'Displays all contacts.',
+          examples: [ '/get-contacts' ]
+        },
+        run: () => {
+          const contacts = this._dc.getContacts().map(id => {
+            const c = this._dc.getContact(id)
+            return `${c.getNameAndAddress()} (id = ${c.getId()})`
+          })
+          this._result([
+            `${chalk.bold('All Contacts:')}\n \n`,
+            `${contacts.map(c => '  ' + c).join('\n')}`
+          ].join(''))
+        }
+      },
+      help: {
+        help: {
+          syntax: 'help [<command>]',
+          description: 'Displays the documentation for the given command.',
+          examples: [ '/help', '/help help' ]
+        },
+        run: arg => {
+          if (typeof arg === 'string') {
+            // Help about a specific command
+            const cmd = this._commands[arg]
+            if (cmd && cmd.help) {
+              this._result(renderHelp(cmd.help))
+            } else {
+              this._error(`No help for ${arg}!`)
+            }
+          } else {
+            this._result(renderCommands(this._commands))
+          }
+        }
+      },
       'star-message': {
         help: {
           syntax: 'star-message <id>',
@@ -207,6 +188,25 @@ class Commander {
           const star = message.isStarred()
           this._dc.starMessages(id, !star)
           this._info(`Message ${id} was ${star ? 'un' : ''}starred.`)
+        }
+      },
+      'unarchive-chat': {
+        help: {
+          syntax: 'unarchive-chat <id>',
+          description: 'Unarchive a chat.',
+          examples: [ '/unarchive-chat 12' ]
+        },
+        run: id => {
+          const chat = this._dc.getChat(id)
+          if (chat === null) {
+            return this._error(`Invalid chat id ${id}!`)
+          }
+          if (chat.getArchived()) {
+            this._state.unArchiveChat(Number(id))
+            this._info(`Chat ${id} unarchived successfully.`)
+          } else {
+            this._info(`Chat ${id} is already unarchived.`)
+          }
         }
       }
     }
