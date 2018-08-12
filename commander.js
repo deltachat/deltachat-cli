@@ -144,13 +144,20 @@ class Commander {
           examples: [ '/get-contacts' ]
         },
         run: () => {
-          const contacts = this._dc.getContacts().map(id => {
+          const toString = id => {
             const c = this._dc.getContact(id)
-            return `${c.getNameAndAddress()} (id = ${c.getId()})`
-          })
+            let res = `${c.getNameAndAddress()} (id = ${c.getId()})`
+            if (c.isBlocked()) {
+              res += ' (blocked)'
+            }
+            return res
+          }
+          const unblocked = this._dc.getContacts().map(toString)
+          const blocked = this._dc.getBlockedContacts().map(toString)
+          const all = unblocked.concat(blocked)
           this._result([
             `${chalk.bold('All Contacts:')}\n \n`,
-            `${contacts.map(c => '  ' + c).join('\n')}`
+            `${all.map(c => '  ' + c).join('\n')}`
           ].join(''))
         }
       },
