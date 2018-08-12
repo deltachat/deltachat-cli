@@ -30,6 +30,25 @@ class Commander {
           }
         }
       },
+      'block-contact': {
+        help: {
+          syntax: 'block-contact <id>',
+          description: 'Block a contact.',
+          examples: [ '/block-contact 13' ]
+        },
+        run: id => {
+          const contact = this._dc.getContact(id)
+          if (contact === null) {
+            return this._error(`Invalid contact id ${id}!`)
+          }
+          if (!contact.isBlocked()) {
+            this._dc.blockContact(id, true)
+            this._info(`Blocked contact ${id}.`)
+          } else {
+            this._info('Contact is already blocked.')
+          }
+        }
+      },
       clear: {
         help: {
           syntax: 'clear',
@@ -213,6 +232,25 @@ class Commander {
             this._info(`Chat ${id} unarchived successfully.`)
           } else {
             this._info(`Chat ${id} is already unarchived.`)
+          }
+        }
+      },
+      'unblock-contact': {
+        help: {
+          syntax: 'unblock-contact <id>',
+          description: 'Unblock a contact.',
+          examples: [ '/unblock-contact 13' ]
+        },
+        run: id => {
+          const contact = this._dc.getContact(id)
+          if (contact === null) {
+            return this._error(`Invalid contact id ${id}!`)
+          }
+          if (contact.isBlocked()) {
+            this._dc.blockContact(id, false)
+            this._info(`Unblocked contact ${id}.`)
+          } else {
+            this._info('Contact is already unblocked.')
           }
         }
       }

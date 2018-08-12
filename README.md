@@ -45,6 +45,7 @@ TODO
 Commands can be executed from anywhere, but the output of all commands show up in the `status` window.
 
 * `/archive-chat [<id>]` Archive a chat. If `<id>` is omitted, defaults to current chat.
+* `/block-contact <id>` Block a contact.
 * `/clear` Clear the debug or status window.
 * `/create-chat <contactId>` Create a normal chat with a single user.
 * `/create-contact <name> <address>` Create a contact.
@@ -56,6 +57,7 @@ Commands can be executed from anywhere, but the output of all commands show up i
 * `/help [<command>]` Show all commands and their short syntax or help about a specific `command`.
 * `/star-message <id>` Star a message (starred messages show up in a virtual `stars` chat).
 * `/unarchive-chat <id>` Unarchive a chat.
+* `/unblock-contact <id>` Unblock a contact.
 
 ## Configuration
 
