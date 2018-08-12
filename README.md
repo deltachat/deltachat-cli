@@ -9,11 +9,36 @@
 
 Experimental application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon. Bringing end to end encrypted chat over email to the commmand line.
 
-## Install and Usage
+* [Install](#install)
+* [Usage](#usage)
+* [Platform Support](#platform-support)
+* [Screenshots](#screenshots)
+* [Shortcuts and Keys](#shortcuts-and-keys)
+* [Commands](#commands)
+* [Configuration](#configuration)
+* [Why?](#why)
+* [Debug](#debug)
+* [Kudos and Inspiration](#kudos-and-inspiration)
+* [License](#license)
+
+## Install
 
 ```sh
 npm i deltachat-cli -g
+```
+
+## Usage
+
+```sh
 deltachat --email user@site.org --mail_pw foo
+```
+
+By default `deltachat` will use the `$HOME/.deltachat_cli` folder for storing data. This can be overriden by using the `--home` argument.
+
+Run `deltachat` using current folder to store data:
+
+```sh
+deltachat --email user@site.org --mail_pw foo --home .
 ```
 
 ## Platform Support
@@ -60,14 +85,6 @@ Commands can be executed from anywhere, but the output of all commands show up i
 
 ## Configuration
 
-By default `deltachat` will use the `$HOME/.deltachat_cli` folder for storing data. This can be overriden by using the `--home` argument.
-
-Run `deltachat` using current folder to store data:
-
-```sh
-deltachat --email user@site.org --mail_pw foo --home .
-```
-
 You can use environment variables instead of command line arguments:
 
 
@@ -87,10 +104,6 @@ It's possible to configure various styles in the application.
 
 Please consult [`rc.js`](./rc.js) for default values.
 
-## Kudos and Inspiration
-
-A lot of inspiration comes from [`irssi`](https://github.com/irssi/irssi) and the architecture has a lot in common with [`cabal`](https://github.com/cabal-club/cabal).
-
 ## Why?
 
 > Why not just write a plugin for `irssi` or `weechat` and be done with it?
@@ -108,6 +121,10 @@ You should check them out. They're great!
 ## Debug
 
 Running `deltax` with `--debug` will create a debug window where all events from `deltachat-node` can be seen.
+
+## Kudos and Inspiration
+
+A lot of inspiration comes from [`irssi`](https://github.com/irssi/irssi) and the architecture has a lot in common with [`cabal`](https://github.com/cabal-club/cabal).
 
 ## License
 
