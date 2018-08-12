@@ -6,10 +6,10 @@
   "scripts": {
     "test": "standard"
   },
-  "homepage": "https://github.com/ralphtheninja/deltachat-cli",
+  "homepage": "https://github.com/deltachat/deltachat-cli",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ralphtheninja/deltachat-cli.git"
+    "url": "https://github.com/deltachat/deltachat-cli.git"
   },
   "bin": {
     "deltachat": "cli.js"
