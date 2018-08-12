@@ -100,8 +100,12 @@ class Commander {
           if (chat === null) {
             return this._error(`Invalid chat id ${id}!`)
           }
-          this._state.archiveChat(Number(id))
-          this._info(`Chat ${id} archived successfully.`)
+          if (!chat.getArchived()) {
+            this._state.archiveChat(Number(id))
+            this._info(`Chat ${id} archived successfully.`)
+          } else {
+            this._info(`Chat ${id} is already archived.`)
+          }
         }
       },
       'unarchive-chat': {
@@ -115,8 +119,12 @@ class Commander {
           if (chat === null) {
             return this._error(`Invalid chat id ${id}!`)
           }
-          this._state.unArchiveChat(Number(id))
-          this._info(`Chat ${id} unarchived successfully.`)
+          if (chat.getArchived()) {
+            this._state.unArchiveChat(Number(id))
+            this._info(`Chat ${id} unarchived successfully.`)
+          } else {
+            this._info(`Chat ${id} is already unarchived.`)
+          }
         }
       },
       'get-contacts': {
