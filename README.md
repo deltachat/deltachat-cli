@@ -6,9 +6,7 @@
 ![Node version](https://img.shields.io/node/v/deltachat-cli.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Experimental command line application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon.
-
-**WORK IN PROGRESS** Not much to see at the moment. You can send and receive messages and do simple plumbing commands. Not yet published on `npm` so you need to clone the repository and run this hardcore style.
+Experimental application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon. Bringing end to end encrypted chat over email to the commmand line.
 
 ## Install and Usage
 
