@@ -66,7 +66,7 @@ class Layout {
   }
 
   prompt (state) {
-    const index = state.currentPageIndex()
+    const index = state.currentPageIndex() + 1
     const name = state.currentPage().name()
     return [
       `[${index}:${name}] ${state.input.line()}`
