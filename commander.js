@@ -104,6 +104,21 @@ class Commander {
           this._info(`Chat ${id} archived successfully.`)
         }
       },
+      'unarchive-chat': {
+        help: {
+          syntax: 'unarchive-chat <id>',
+          description: 'Unarchive a chat.',
+          examples: [ '/unarchive-chat 12' ]
+        },
+        run: id => {
+          const chat = this._dc.getChat(id)
+          if (chat === null) {
+            return this._error(`Invalid chat id ${id}!`)
+          }
+          this._state.unArchiveChat(Number(id))
+          this._info(`Chat ${id} unarchived successfully.`)
+        }
+      },
       'get-contacts': {
         help: {
           syntax: 'get-contacts',

@@ -54,6 +54,7 @@ Commands can be executed from anywhere, but the output of all commands show up i
 * `/get-contacts` List all contacts.
 * `/help [<command>]` Show all commands and their short syntax or help about a specific `command`.
 * `/star-message <id>` Star a message (starred messages show up in a virtual `stars` chat).
+* `/unarchive-chat <id>` Unarchive a chat.
 
 ## Configuration
 

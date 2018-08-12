@@ -197,11 +197,13 @@ class State {
   }
 
   loadChats () {
-    this._getChats().forEach(chatId => {
-      const chat = this._getChatPage(chatId)
-      const messageIds = this._dc.getChatMessages(chatId, 0, 0)
-      messageIds.forEach(id => chat.appendMessage(id))
-    })
+    this._getChats().forEach(id => this._loadChat(id))
+  }
+
+  _loadChat (chatId) {
+    const chat = this._getChatPage(chatId)
+    const messageIds = this._dc.getChatMessages(chatId, 0, 0)
+    messageIds.forEach(id => chat.appendMessage(id))
   }
 
   queueDeadDropMessage (message) {
@@ -230,9 +232,7 @@ class State {
             this.info(`Added contact ${name} (${address})`)
           }
           const chatId = this.createChatByContactId(contactId)
-          const messageIds = this._dc.getChatMessages(chatId, 0, 0)
-          const chat = this._getChatPage(chatId)
-          messageIds.forEach(id => chat.appendMessage(id))
+          this._loadChat(chatId)
           this._selectChatPage(chatId)
         },
         no: () => { /* do nothing */ },
@@ -283,6 +283,15 @@ class State {
         this._page--
       }
       this._pages.splice(index, 1)
+    }
+  }
+
+  unArchiveChat (chatId) {
+    const currChatId = this.currentPage().chatId
+    this._dc.archiveChat(chatId, false)
+    this._loadChat(chatId)
+    if (typeof currChatId === 'number') {
+      this._selectChatPage(currChatId)
     }
   }
 
