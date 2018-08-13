@@ -2,6 +2,7 @@ const EVENTS = require('deltachat-node/events')
 const C = require('deltachat-node/constants')
 const boxen = require('boxen')
 const chalk = require('chalk')
+const dateTime = require('date-time')
 const util = require('./util')
 
 class ChatMessage {
@@ -22,7 +23,7 @@ class ChatMessage {
 
     const header = [
       `#${msg.getId()} `,
-      `${toDate(msg.getTimestamp())} `,
+      `${dateTime({ date: new Date(msg.getTimestamp() * 1000) })} `,
       `lock:${msg.getShowpadlock() ? 1 : 0} `,
       `star:${msg.isStarred() ? 1 : 0} `,
       `state:${msg.getState().state}`
@@ -48,14 +49,6 @@ class ChatMessage {
       borderStyle: config.borderStyle
     })
   }
-}
-
-const toDate = ts => {
-  const date = new Date(ts * 1000)
-  const hours = date.getHours()
-  const minutes = '0' + date.getMinutes()
-  const seconds = '0' + date.getSeconds()
-  return `${hours}:${minutes.substr(-2)}:${seconds.substr(-2)}`
 }
 
 class AbstractPage {
