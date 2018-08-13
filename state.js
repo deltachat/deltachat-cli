@@ -5,6 +5,8 @@ const chalk = require('chalk')
 const dateTime = require('date-time')
 const util = require('./util')
 
+const MAX_PAGE_LENGTH = 20000
+
 class ChatMessage {
   constructor (messageId, rc, dc) {
     this.messageId = messageId
@@ -102,6 +104,9 @@ class AbstractPage {
 
   append (line) {
     this._lines.push(line)
+    if (this._lines.length > MAX_PAGE_LENGTH) {
+      this._lines.shift()
+    }
   }
 
   clear () {
