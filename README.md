@@ -72,7 +72,7 @@ Commands can be executed from anywhere, but the output of all commands show up i
 * `/block-contact <id>` Block a contact.
 * `/clear` Clear the debug or status window.
 * `/create-chat <contactId>` Create a normal chat with a single user.
-* `/create-contact <name> <address>` Create a contact.
+* `/create-contact [<name>] <address>` Create a contact.
 * `/delete-chat [<id>]` Delete a chat. If `<id>` is omitted, defaults to current chat.
 * `/delete-contact <id>` Delete a contact (might fail if you have an open chat with that particular user).
 * `/delete-message <id>` Delete a message.

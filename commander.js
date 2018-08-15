@@ -78,14 +78,24 @@ class Commander {
       },
       'create-contact': {
         help: {
-          syntax: 'create-contact <name> <address>',
+          syntax: 'create-contact [<name>] <address>',
           description: 'Create a contact.',
-          examples: [ '/create-contact Alice alice@site.org' ]
+          examples: [
+            '/create-contact Alice alice@site.org',
+            '/create-contact bob@site.org'
+          ]
         },
         run: (name, address) => {
-          if (typeof name === 'string' && typeof address === 'string') {
+          const createContact = (name, address) => {
             const id = this._dc.createContact(name, address)
-            this._info(`Contact ${id} created or updated.`)
+            if (id !== 0) {
+              this._info(`Contact ${id} created or updated.`)
+            }
+          }
+          if (typeof name === 'string' && typeof address === 'string') {
+            createContact(name, address)
+          } else if (typeof name === 'string') {
+            createContact(name.split('@')[0], name)
           } else {
             this._error('Invalid parameters!')
           }
