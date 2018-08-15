@@ -5,8 +5,9 @@ const gradient = require('gradient-string')
 const camelCase = require('camelcase')
 
 class Layout {
-  constructor (opts) {
-    this.opts = opts
+  constructor (rc) {
+    this._rc = rc
+    this._opts = rc.layout
   }
 
   render (state) {
@@ -36,7 +37,7 @@ class Layout {
 
   titleBar (state) {
     let text = 'Delta Chat'
-    const opts = this.opts.titlebar
+    const opts = this._opts.titlebar
 
     if (opts.gradient) {
       text = (gradient[opts.gradient] || gradient.fruit)(text)
@@ -81,11 +82,11 @@ class Layout {
   }
 
   titleVisible () {
-    return this.opts.titlebar.show === true
+    return this._opts.titlebar.show === true
   }
 
   statusVisible () {
-    return this.opts.statusbar.show === true
+    return this._opts.statusbar.show === true
   }
 }
 
