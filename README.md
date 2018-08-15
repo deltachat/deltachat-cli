@@ -7,7 +7,7 @@
 ![Node version](https://img.shields.io/node/v/deltachat-cli.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Experimental application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon. Bringing end to end encrypted chat over email to the commmand line.
+Experimental application built on top of the [`deltachat-node`](https://github.com/deltachat/deltachat-node) native addon. Bringing E2EE chat over email to the commmand line.
 
 * [Install](#install)
 * [Usage](#usage)
