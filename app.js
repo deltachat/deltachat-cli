@@ -100,6 +100,11 @@ class App {
       state.appendMessage(chatId, msgId)
     })
 
+    dc.on('DC_EVENT_WARNING', state.warning.bind(state))
+    dc.on('DC_EVENT_ERROR', (code, error) => {
+      state.error(`${error} (code = ${code})`)
+    })
+
     this.render()
   }
 
