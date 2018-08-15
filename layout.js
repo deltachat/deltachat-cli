@@ -59,9 +59,13 @@ class Layout {
   }
 
   statusBar (state) {
+    const date = chalk.yellow(util.dateTime())
+    const email = this._rc.email
+    const name = chalk.yellow(email.split('@')[0])
+    const text = [ `[${date}]`, `[${name}]` ].join(' ')
     return [
-      bgColor(this.opts.statusbar.bgColor)(
-        ' '.repeat(process.stdout.columns)
+      bgColor(this._opts.statusbar.bgColor)(
+        util.leftAlignText(chalk.white(text), process.stdout.columns)
       )
     ]
   }

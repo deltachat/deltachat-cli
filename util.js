@@ -1,3 +1,5 @@
+const dateFormat = require('dateformat')
+
 // TODO: This code is copied from cabal
 // https://github.com/cabal-club/cabal/blob/master/util.js
 
@@ -70,9 +72,23 @@ function rightAlignText (text, width) {
   return lspace + text
 }
 
+function leftAlignText (text, width) {
+  var right = width - strlenAnsi(text)
+  if (right < 0) return text
+  var rspace = new Array(right).fill(' ').join('')
+  return text + rspace
+}
+
+function dateTime (now) {
+  now = now || Date.now()
+  return dateFormat(now, 'yy/mm/dd hh:MM')
+}
+
 module.exports = {
   wrapAnsi,
   strlenAnsi,
   centerText,
-  rightAlignText
+  rightAlignText,
+  leftAlignText,
+  dateTime
 }

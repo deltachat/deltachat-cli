@@ -2,7 +2,6 @@ const EVENTS = require('deltachat-node/events')
 const C = require('deltachat-node/constants')
 const boxen = require('boxen')
 const chalk = require('chalk')
-const dateTime = require('date-time')
 const util = require('./util')
 
 const MAX_PAGE_LENGTH = 20000
@@ -25,7 +24,7 @@ class ChatMessage {
 
     const header = [
       `#${msg.getId()} `,
-      `${dateTime({ date: new Date(msg.getTimestamp() * 1000) })} `,
+      `${util.dateTime(msg.getTimestamp() * 1000)} `,
       `lock:${msg.getShowpadlock() ? 1 : 0} `,
       `star:${msg.isStarred() ? 1 : 0} `,
       `state:${msg.getState().state}`

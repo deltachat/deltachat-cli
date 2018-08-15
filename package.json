@@ -25,7 +25,7 @@
     "boxen": "^1.3.0",
     "camelcase": "^5.0.0",
     "chalk": "^2.4.1",
-    "date-time": "^2.1.0",
+    "dateformat": "^3.0.3",
     "deltachat-node": "~0.4.1",
     "gradient-string": "^1.1.0",
     "lcp": "^1.1.0",
