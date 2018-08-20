@@ -12,9 +12,11 @@ if (!rc.email || !rc.mail_pw) {
 mkdirp.sync(rc.home)
 
 const dc = new DeltaChat({
-  email: rc.email,
+  addr: rc.email,
   mail_pw: rc.mail_pw,
-  root: rc.home
+  cwd: rc.home
 })
 
-require('./app')(rc, dc)
+dc.open(() => {
+  require('./app')(rc, dc)
+})

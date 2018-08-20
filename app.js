@@ -74,12 +74,6 @@ class App {
 
     input.on('keypress', (ch, key) => this.render())
 
-    dc.on('ready', () => {
-      state.loadChats()
-      state.nextPage()
-      this.render()
-    })
-
     dc.on('ALL', (event, data1, data2) => {
       state.logEvent(event, data1, data2)
       this.render()
@@ -105,6 +99,7 @@ class App {
       state.error(`${error} (code = ${code})`)
     })
 
+    state.loadChats()
     this.render()
   }
 
