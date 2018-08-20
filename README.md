@@ -120,7 +120,7 @@ You should check them out. They're great!
 
 ## Debug
 
-Running `deltax` with `--debug` will create a debug window where all events from `deltachat-node` can be seen.
+Running `deltachat` with `--debug` will create a debug window where all events from `deltachat-node` can be seen.
 
 ## Kudos and Inspiration
 
