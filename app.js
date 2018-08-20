@@ -76,7 +76,6 @@ class App {
 
     dc.on('ready', () => {
       state.loadChats()
-      state.nextPage()
       this.render()
     })
 
