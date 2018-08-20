@@ -17,6 +17,6 @@ const dc = new DeltaChat({
   cwd: rc.home
 })
 
-dc.open(() => {
-  require('./app')(rc, dc)
-})
+require('./app')(rc, dc)
+
+dc.open()
