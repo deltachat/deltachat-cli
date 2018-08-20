@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2018-08-20
+
+### Changed
+* Change back to use `'ready'` event to render ui before configure is done (@ralphtheninja)
+* Stay on current page at start up (@ralphtheninja)
+* Fix `deltax` typo in README (@r10s)
+
 ## [0.2.0] - 2018-08-20
 
 ### Changed
@@ -26,7 +33,8 @@
 
 :seedling: Initial release.
 
-[Unreleased]: https://github.com/deltachat/deltachat-cli/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/deltachat/deltachat-cli/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/deltachat/deltachat-cli/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/deltachat/deltachat-cli/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/deltachat/deltachat-cli/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/deltachat/deltachat-cli/compare/v0.1.0...v0.1.1
