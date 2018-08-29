@@ -36,7 +36,7 @@
     "txt-blit": "^1.0.0"
   },
   "devDependencies": {
-    "standard": "^11.0.1"
+    "standard": "^12.0.0"
   },
   "engines": {
     "node": ">=10.7.0"
